@@ -1,0 +1,9 @@
+# Git ignore rules 
+
+.vs/
+bin/
+obj/
+*.user
+*.suo
+*.cache
+*.vsidx
