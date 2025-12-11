@@ -8,4 +8,22 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="MVVM\ViewModels\Attendances\" />
+    <Folder Include="MVVM\ViewModels\Departments\" />
+    <Folder Include="MVVM\ViewModels\Users\" />
+    <Folder Include="MVVM\Views\Attendances\" />
+    <Folder Include="MVVM\Views\Departments\" />
+    <Folder Include="MVVM\Views\Users\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Npgsql" Version="10.0.0" />
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="10.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Back End\Business Layer\Business Layer.csproj" />
+  </ItemGroup>
+
 </Project>
