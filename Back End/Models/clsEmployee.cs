@@ -2,8 +2,8 @@
 {
     public class clsEmployee
     {
-        public int EmployeeID { get; set; }
-        public int PersonID { get; set; }
+        public int EmployeeID { get; set; } = -1;
+        public int PersonID { get; set; } = -1;
 
         //Deprtment Allows Null if the employee is CEO
         public int? DepartmentID { get; set; }
@@ -13,12 +13,7 @@
 
         public clsEmployee()
         {
-            EmployeeID = -1;
-            PersonID = -1;
-            DepartmentID = null;
-            Salary = 0;
-            JobPosition = "";
-            Person = new clsPerson();
+
         }
 
         public clsEmployee(clsEmployee Employee)

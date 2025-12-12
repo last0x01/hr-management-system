@@ -6,18 +6,58 @@ namespace Data_Access_Layer
     public class clsEmployeeData
     {
 
-        public static bool GetEmployeeByID(int EmployeeID, ref clsEmployee Employee)
+        public static clsEmployee? GetEmployeeByID(int employeeID)
         {
-            bool IsFound = false;
+            const string query = @"select * from Employees where EmployeeID = @EmployeeID";
 
-            return IsFound;
-        }
-        public static bool GetEmployeeByPersonID(int PersonID, ref clsEmployee Employee)
-        {
-            bool IsFound = false;
+            using (NpgsqlConnection connection =
+                   new NpgsqlConnection(clsDataAccessSettings.ConnectionString))
+            using (NpgsqlCommand command = new NpgsqlCommand(query, connection))
+            {
+                command.Parameters.AddWithValue("@EmployeeID", employeeID);
 
-            return IsFound;
+                try
+                {
+                    connection.Open();
+
+                    using (NpgsqlDataReader reader = command.ExecuteReader())
+                    {
+                        if (!reader.Read())
+                            return null;
+
+                        clsEmployee employee = new clsEmployee
+                        {
+                            EmployeeID = (int)reader["EmployeeID"],
+                            PersonID = (int)reader["PersonID"],
+                            JobPosition = (string)reader["job_position"],
+                            Salary = (decimal)reader["Salary"],
+                            DepartmentID = reader["DepartmentID"] == DBNull.Value
+                                ? null
+                                : (int)reader["DepartmentID"]
+                        };
+
+                        employee.Person = new clsPerson
+                        {
+                            PersonID = (int)reader["PersonID"],
+                            FirstName = (string)reader["FirstName"],
+                            LastName = (string)reader["LastName"],
+                            Age = (int)reader["Age"],
+                            Phone = reader["Phone"] == DBNull.Value ? null : (string)reader["Phone"],
+                            Email = reader["Email"] == DBNull.Value ? null : (string)reader["Email"],
+                            Gender = (string)reader["Gender"],
+                            Address = reader["Address"] == DBNull.Value ? null : (string)reader["Address"]
+                        };
+
+                        return employee;
+                    }
+                }
+                catch
+                {
+                    return null;
+                }
+            }
         }
+
 
         public static int AddNewEmployee(clsEmployee Employee)
         {
@@ -43,7 +83,7 @@ namespace Data_Access_Layer
 
                 Command.Parameters.AddWithValue("@Salary", Employee.Salary);
                 Command.Parameters.AddWithValue("@DepartmentID", Employee.DepartmentID ?? (object)DBNull.Value);
-                Command.Parameters.AddWithValue("@job_position", Employee.Job_Position);
+                Command.Parameters.AddWithValue("@job_position", Employee.JobPosition);
 
 
                 try
@@ -89,7 +129,7 @@ namespace Data_Access_Layer
                 Command.Parameters.AddWithValue("@PersonID", Employee.PersonID);
                 Command.Parameters.AddWithValue("@Salary", Employee.Salary);
                 Command.Parameters.AddWithValue("@DepartmentID", Employee.DepartmentID ?? (object)DBNull.Value);
-                Command.Parameters.AddWithValue("@job_position", Employee.Job_Position);
+                Command.Parameters.AddWithValue("@job_position", Employee.JobPosition);
 
                 // this is Will return if the update operation is completed 
 
@@ -181,7 +221,7 @@ namespace Data_Access_Layer
                         {
                             EmployeeID = (int)reader["EmployeeID"],
                             PersonID = (int)reader["PersonID"],
-                            Job_Position = (string)reader["job_position"],
+                            JobPosition = (string)reader["job_position"],
                             Salary = (decimal)reader["Salary"],
                             DepartmentID = reader["DepartmentID"] == DBNull.Value ? null : (int)reader["DepartmentID"]
                         };

@@ -2,7 +2,7 @@
 {
     public class clsPerson
     {
-        public int PersonID { get; set; }
+        public int PersonID { get; set; } = -1;
 
         public string FirstName { get; set; } = string.Empty;
 

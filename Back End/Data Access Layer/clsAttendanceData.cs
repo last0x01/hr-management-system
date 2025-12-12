@@ -7,6 +7,55 @@ namespace Back_End.Data_Access_Layer
 {
     public class clsAttendanceData
     {
+        public static clsAttendance? GetAttendanceByID(int attendanceID)
+        {
+            const string query =
+                @"SELECT AttendanceID, EmployeeID, AttendanceDate,
+                 CheckIn, CheckOut, CreatedByUserID, Status
+          FROM Attendances
+          WHERE AttendanceID = @AttendanceID";
+
+            using (NpgsqlConnection connection =
+                   new NpgsqlConnection(clsDataAccessSettings.ConnectionString))
+            using (NpgsqlCommand command = new NpgsqlCommand(query, connection))
+            {
+                command.Parameters.AddWithValue("@AttendanceID", attendanceID);
+
+                try
+                {
+                    connection.Open();
+
+                    using (NpgsqlDataReader reader = command.ExecuteReader())
+                    {
+                        if (!reader.Read())
+                            return null;
+
+                        return new clsAttendance
+                        {
+                            AttendanceID = (int)reader["AttendanceID"],
+                            EmployeeID = (int)reader["EmployeeID"],
+                            AttendanceDate = (DateTime)reader["AttendanceDate"],
+                            CheckIn = reader["CheckIn"] == DBNull.Value
+                                ? null
+                                : (TimeSpan?)reader["CheckIn"],
+                            CheckOut = reader["CheckOut"] == DBNull.Value
+                                ? null
+                                : (TimeSpan?)reader["CheckOut"],
+                            CreatedByUserID = (int)reader["CreatedByUserID"],
+                            Status = reader["Status"] == DBNull.Value
+                                ? null
+                                : (string)reader["Status"]
+                        };
+                    }
+                }
+                catch
+                {
+                    return null;
+                }
+            }
+        }
+
+
         public static int AddAttendance(clsAttendance Attendance)
         {
             int NewAttendanceID = 0;

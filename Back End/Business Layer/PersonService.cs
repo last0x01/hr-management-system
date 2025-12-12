@@ -1,12 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Back_End.Models;
+using Data_Access_Layer;
 
 namespace Business_Layer
 {
-    internal class PersonService
+    public class PersonService
     {
+
+
+        public static clsPerson? GetPersonByID(int PersonID)
+        {
+            return clsPersonData.GetPersonByID(PersonID);
+
+        }
+
+
+
+
     }
 }
