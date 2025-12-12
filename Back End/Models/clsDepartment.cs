@@ -1,50 +1,26 @@
-﻿
-
-namespace Back_End.Models
+﻿namespace Back_End.Models
 {
     public class clsDepartment
     {
 
-        private int _DepartmentID;
+        public int DepartmentID { get; set; } = -1;
 
-        private string _DepartmentName;
+        public string DepartmentName { get; set; } = string.Empty;
 
-        private bool _IsActive;
+        public bool IsActive { get; set; } = false;
 
-        private string _Description;
-
-
+        public string Description { get; set; } = string.Empty;
 
         public clsDepartment()
         {
-            _DepartmentID = -1;
-            _DepartmentName = "";
-            _IsActive = false;
-            _Description = "";
         }
 
-        public int DepartmentID
+        public clsDepartment(clsDepartment Department)
         {
-            get { return _DepartmentID; }
-            set { _DepartmentID = value; }
+            DepartmentID = Department.DepartmentID;
+            DepartmentName = Department.DepartmentName;
+            IsActive = Department.IsActive;
+            Description = Department.Description;
         }
-        public string DepartmentName
-        {
-            get { return _DepartmentName; }
-            set { _DepartmentName = value; }
-        }
-        public bool IsActive
-        {
-            get { return _IsActive; }
-            set { _IsActive = value; }
-        }
-        public string Description
-        {
-            get { return _Description; }
-            set { _Description = value; }
-        }
-
-
-
     }
 }

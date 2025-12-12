@@ -30,7 +30,7 @@ namespace Data_Access_Layer
                     {
                         Person = new clsPerson
                         {
-                            ID = PersonID,
+                            PersonID = PersonID,
                             FirstName = (string)reader["FirstName"],
                             LastName = (string)reader["LastName"],
                             Age = (int)reader["Age"],
@@ -68,7 +68,7 @@ namespace Data_Access_Layer
         //{
 
 
-        //    clsPerson Person = new clsPerson();
+        //    clsPerson clsPerson = new clsPerson();
 
         //    using (NpgsqlConnection Connection = new NpgsqlConnection(clsDataAccessSettings.ConnectionString))
         //    {
@@ -85,9 +85,9 @@ namespace Data_Access_Layer
 
         //            if (reader.Read())
         //            {
-        //                Person = new clsPerson
+        //                clsPerson = new clsPerson
         //                {
-        //                    ID = PersonID,
+        //                    PersonID = PersonID,
         //                    FirstName = (string)reader["FirstName"],
         //                    LastName = (string)reader["LastName"],
         //                    Age = (int)reader["Age"],
@@ -109,7 +109,7 @@ namespace Data_Access_Layer
 
         //    }
 
-        //    return Person;
+        //    return clsPerson;
         //}
     }
 }

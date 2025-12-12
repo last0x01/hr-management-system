@@ -133,7 +133,7 @@ namespace Data_Access_Layer
 
                     clsPerson Person = new clsPerson
                     {
-                        ID = User.PersonID,
+                        PersonID = User.PersonID,
                         FirstName = reader.GetString(reader.GetOrdinal("FirstName")),
                         LastName = reader.GetString(reader.GetOrdinal("LastName")),
                         Age = reader.GetInt32(reader.GetOrdinal("Age")),

@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-namespace Front_End.HR_MS.Utilities
+namespace HR_MS.Utilities
 {
     public class clsNotifyObject : INotifyPropertyChanged
     {

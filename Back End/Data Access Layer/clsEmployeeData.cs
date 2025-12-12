@@ -6,6 +6,19 @@ namespace Data_Access_Layer
     public class clsEmployeeData
     {
 
+        public static bool GetEmployeeByID(int EmployeeID, ref clsEmployee Employee)
+        {
+            bool IsFound = false;
+
+            return IsFound;
+        }
+        public static bool GetEmployeeByPersonID(int PersonID, ref clsEmployee Employee)
+        {
+            bool IsFound = false;
+
+            return IsFound;
+        }
+
         public static int AddNewEmployee(clsEmployee Employee)
         {
             int NewEmployeeID = 0;
@@ -175,7 +188,7 @@ namespace Data_Access_Layer
 
                         clsPerson Person = new clsPerson
                         {
-                            ID = (int)reader["PersonID"],
+                            PersonID = (int)reader["PersonID"],
                             FirstName = (string)reader["FirstName"],
                             LastName = (string)reader["LastName"],
                             Age = (int)reader["Age"],

@@ -2,59 +2,36 @@
 {
     public class clsEmployee
     {
-        private int _EmployeeID;
-        private int _PersonID;
-        private clsPerson _Person;
+        public int EmployeeID { get; set; }
+        public int PersonID { get; set; }
 
         //Deprtment Allows Null if the employee is CEO
-        private int? _DepartmentID;
-        private decimal _Salary;
-        private string _Job_Position;
+        public int? DepartmentID { get; set; }
+        public decimal Salary { get; set; }
+        public string JobPosition { get; set; } = string.Empty;
+        public clsPerson Person { get; set; } = new clsPerson();
 
         public clsEmployee()
         {
-            _EmployeeID = -1;
-            _PersonID = -1;
-            _DepartmentID = null;
-            _Salary = 0;
-            _Job_Position = "";
-            _Person = new clsPerson();
+            EmployeeID = -1;
+            PersonID = -1;
+            DepartmentID = null;
+            Salary = 0;
+            JobPosition = "";
+            Person = new clsPerson();
         }
 
-        public int EmployeeID
+        public clsEmployee(clsEmployee Employee)
         {
-            get => _EmployeeID;
-            set { _EmployeeID = value; }
-        }
-        public int PersonID
-        {
-            get => _PersonID;
-            set { _PersonID = value; }
-        }
+            EmployeeID = Employee.EmployeeID;
+            PersonID = Employee.PersonID;
+            DepartmentID = Employee.DepartmentID;
+            Salary = Employee.Salary;
+            JobPosition = Employee.JobPosition;
 
-        public int? DepartmentID
-        {
-            get => _DepartmentID;
-            set { _DepartmentID = value; }
-        }
-
-        public decimal Salary
-        {
-            get => _Salary;
-            set { _Salary = value; }
-        }
-
-        public string Job_Position
-        {
-            get => _Job_Position;
-            set { _Job_Position = value; }
+            Person = new clsPerson(Employee.Person);
         }
 
 
-        public clsPerson Person
-        {
-            get => _Person;
-            set { _Person = value; }
-        }
     }
 }
