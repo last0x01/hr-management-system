@@ -2,73 +2,37 @@
 {
     public class clsAttendance
     {
-        /*
-         Check in allows null
-         Check out allows null
-         Status allows null
-        */
+        public int AttendanceID { get; set; } = -1;
+        public int EmployeeID { get; set; } = -1;
+        public clsEmployee Employee { get; set; } = new clsEmployee();
 
-        private int _AttendanceID;
-        private int _EmployeeID;
-        private DateTime _AttendanceDate;
-        private TimeSpan? _CheckIn;
-        private TimeSpan? _CheckOut;
-        private int _CreatedByUserID;
-        private string? _Status;
+        public DateTime AttendanceDate { get; set; } = DateTime.Now;
+
+        // Nullable: may not have checked in yet
+        public TimeSpan? CheckIn { get; set; }
+
+        // Nullable: may not have checked out yet
+        public TimeSpan? CheckOut { get; set; }
+
+        public int CreatedByUserID { get; set; } = -1;
+        public string? Status { get; set; }
 
         public clsAttendance()
         {
-            _AttendanceID = -1;
-            _EmployeeID = -1;
-            _AttendanceDate = DateTime.Now;
-            _CheckIn = null;
-            _CheckOut = null;
-            _CreatedByUserID = -1;
-            _Status = null;
         }
 
-        public int AttendanceID
+        public clsAttendance(clsAttendance Attendance)
         {
-            get => _AttendanceID;
-            set { _AttendanceID = value; }
+
+
+            AttendanceID = Attendance.AttendanceID;
+            EmployeeID = Attendance.EmployeeID;
+            AttendanceDate = Attendance.AttendanceDate;
+            CheckIn = Attendance.CheckIn;
+            CheckOut = Attendance.CheckOut;
+            CreatedByUserID = Attendance.CreatedByUserID;
+            Status = Attendance.Status;
+            Employee = new clsEmployee(Attendance.Employee);
         }
-
-        public int EmployeeID
-        {
-            get => _EmployeeID;
-            set { _EmployeeID = value; }
-        }
-
-        public DateTime AttendanceDate
-        {
-            get => _AttendanceDate;
-            set { _AttendanceDate = value; }
-        }
-
-        public TimeSpan? CheckIn
-        {
-            get => _CheckIn;
-            set { _CheckIn = value; }
-        }
-
-        public TimeSpan? CheckOut
-        {
-            get => _CheckOut;
-            set { _CheckOut = value; }
-        }
-
-        public int CreatedByUserID
-        {
-            get => _CreatedByUserID;
-            set { _CreatedByUserID = value; }
-        }
-
-        public string? Status
-        {
-            get => _Status;
-            set { _Status = value; }
-        }
-
-
     }
 }

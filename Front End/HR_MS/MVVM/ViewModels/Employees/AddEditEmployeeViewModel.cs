@@ -1,6 +1,6 @@
-﻿namespace Front_End.HR_MS.MVVM.ViewModels.Employees
+﻿namespace HR_MS.MVVM.ViewModels.Employees
 {
-    internal class AddEditEmployeeViewModel
+    public class AddEditEmployeeViewModel
     {
     }
 }

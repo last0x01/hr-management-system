@@ -1,39 +1,39 @@
-﻿using Front_End.HR_MS.Utilities;
+﻿using HR_MS.Utilities;
 
-namespace Front_End.HR_MS.MVVM.Models
+namespace HR_MS.MVVM.Models
 {
-    public class clsEmployee : clsNotifyObject
+    public class clsEmployeeUiModel : clsNotifyObject
     {
         private int _EmployeeID;
         private int _PersonID;
-        private clsPerson _Person;
+        private clsPersonUiModel _Person;
 
         //Deprtment Allows Null if the employee is CEO
         private int? _DepartmentID;
         private decimal _Salary;
         private string _Job_Position;
 
-        public clsEmployee()
+        public clsEmployeeUiModel()
         {
             _EmployeeID = -1;
             _PersonID = -1;
             _DepartmentID = null;
             _Salary = 0;
             _Job_Position = "";
-            _Person = new clsPerson();
+            _Person = new clsPersonUiModel();
         }
 
-        public clsEmployee(Back_End.Models.clsEmployee Employee)
+        public clsEmployeeUiModel(Back_End.Models.clsEmployee Employee)
         {
 
             _EmployeeID = Employee.EmployeeID;
             _PersonID = Employee.PersonID;
             _DepartmentID = Employee.DepartmentID;
             _Salary = Employee.Salary;
-            _Job_Position = Employee.Job_Position;
-            _Person = new clsPerson();
+            _Job_Position = Employee.JobPosition;
+            _Person = new clsPersonUiModel();
 
-            _Person.ID = Employee.Person.ID;
+            _Person.ID = Employee.Person.PersonID;
             _Person.FirstName = Employee.Person.FirstName;
             _Person.LastName = Employee.Person.LastName;
             _Person.Age = Employee.Person.Age;
@@ -73,7 +73,7 @@ namespace Front_End.HR_MS.MVVM.Models
         }
 
 
-        public clsPerson Person
+        public clsPersonUiModel Person
         {
             get => _Person;
             set { _Person = value; OnPropertyChanged(); }

@@ -1,16 +1,17 @@
 ﻿using Business_Layer;
-using Front_End.HR_MS.MVVM.Commands;
-using Front_End.HR_MS.MVVM.Models;
-using Front_End.HR_MS.Utilities;
+using HR_MS.MVVM.Commands;
+using HR_MS.MVVM.Models;
+using HR_MS.Utilities;
 using System.Collections.ObjectModel;
+
 namespace Front_End.HR_MS.MVVM.ViewModels.Employees
 {
     public class EmployeesViewModel : clsNotifyObject
     {
-        private clsEmployee _SelectedEmployee;
-        public ObservableCollection<clsEmployee> Employees { get; set; } = new ObservableCollection<clsEmployee>();
+        private clsEmployeeUiModel _SelectedEmployee;
+        public ObservableCollection<clsEmployeeUiModel> Employees { get; set; } = new ObservableCollection<clsEmployeeUiModel>();
 
-        public clsEmployee SelectedEmployee
+        public clsEmployeeUiModel SelectedEmployee
         {
             get => _SelectedEmployee;
             set { _SelectedEmployee = value; OnPropertyChanged(); }
@@ -22,7 +23,7 @@ namespace Front_End.HR_MS.MVVM.ViewModels.Employees
         public EmployeesViewModel()
         {
 
-            SelectedEmployee = new clsEmployee();
+            SelectedEmployee = new clsEmployeeUiModel();
 
             RefreshCommand = new RelayCommand(o => _LoadEmployees());
             AddEditCommand = new RelayCommand(o => _AddEditEmployee());
@@ -44,7 +45,7 @@ namespace Front_End.HR_MS.MVVM.ViewModels.Employees
 
             foreach (Back_End.Models.clsEmployee em in EmployeesList)
             {
-                Employees.Add(new clsEmployee(em));
+                Employees.Add(new clsEmployeeUiModel(em));
             }
 
         }

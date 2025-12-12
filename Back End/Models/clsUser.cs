@@ -1,49 +1,30 @@
-﻿
-
-namespace Back_End.Models
+﻿namespace Back_End.Models
 {
     public class clsUser
     {
-        private int _UserID;
-        private int _PersonID;
-        private clsPerson _Person;
-        private string _Username;
-        private string _Passwrod;
+
+        public int UserID { get; set; } = -1;
+
+        public int PersonID { get; set; } = -1;
+
+        public clsPerson Person { get; set; } = new clsPerson();
+
+        public string Username { get; set; } = string.Empty;
+
+
+        public string Password { get; set; } = string.Empty;
 
         public clsUser()
         {
-            _UserID = -1;
-            _PersonID = -1;
-            _Username = "";
-            _Passwrod = "";
-            _Person = new clsPerson();
         }
 
-        public int UserID
+        public clsUser(clsUser user)
         {
-            get { return _UserID; }
-            set { _UserID = value; }
-        }
-        public int PersonID
-        {
-            get { return _PersonID; }
-            set { _PersonID = value; }
-        }
-        public string Username
-        {
-            get { return _Username; }
-            set { _Username = value; }
-        }
-        public string Password
-        {
-            get { return _Passwrod; }
-            set { _Passwrod = value; }
-        }
-
-        public clsPerson Person
-        {
-            get => _Person;
-            set { _Person = value; }
+            UserID = user.UserID;
+            PersonID = user.PersonID;
+            Username = user.Username;
+            Password = user.Password;
+            Person = new clsPerson(user.Person);
         }
     }
 }

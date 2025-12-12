@@ -5,6 +5,58 @@ namespace Data_Access_Layer
 {
     public class clsUserData
     {
+
+
+        public static clsUser? GetUserByID(int userID)
+        {
+            const string query = @"select * from get_user_by_id(@UserID)";
+
+            using (NpgsqlConnection connection =
+                   new NpgsqlConnection(clsDataAccessSettings.ConnectionString))
+            using (NpgsqlCommand command = new NpgsqlCommand(query, connection))
+            {
+                command.Parameters.AddWithValue("@UserID", userID);
+
+                try
+                {
+                    connection.Open();
+
+                    using (NpgsqlDataReader reader = command.ExecuteReader())
+                    {
+                        if (!reader.Read())
+                            return null;
+
+                        clsUser user = new clsUser
+                        {
+                            UserID = (int)reader["UserID"],
+                            PersonID = (int)reader["PersonID"],
+                            Username = (string)reader["Username"],
+                            Password = (string)reader["Password"]
+                        };
+
+                        user.Person = new clsPerson
+                        {
+                            PersonID = (int)reader["PersonID"],
+                            FirstName = (string)reader["FirstName"],
+                            LastName = (string)reader["LastName"],
+                            Age = (int)reader["Age"],
+                            Phone = reader["Phone"] == DBNull.Value ? null : (string)reader["Phone"],
+                            Email = reader["Email"] == DBNull.Value ? null : (string)reader["Email"],
+                            Gender = (string)reader["Gender"],
+                            Address = reader["Address"] == DBNull.Value ? null : (string)reader["Address"]
+                        };
+
+                        return user;
+                    }
+                }
+                catch
+                {
+                    return null;
+                }
+            }
+        }
+
+
         public static int AddNewUser(clsUser user)
         {
             int newUserID = 0;
@@ -133,7 +185,7 @@ namespace Data_Access_Layer
 
                     clsPerson Person = new clsPerson
                     {
-                        ID = User.PersonID,
+                        PersonID = User.PersonID,
                         FirstName = reader.GetString(reader.GetOrdinal("FirstName")),
                         LastName = reader.GetString(reader.GetOrdinal("LastName")),
                         Age = reader.GetInt32(reader.GetOrdinal("Age")),

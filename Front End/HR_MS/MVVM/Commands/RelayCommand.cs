@@ -1,7 +1,7 @@
 ﻿using System.Windows.Input;
 
 
-namespace Front_End.HR_MS.MVVM.Commands
+namespace HR_MS.MVVM.Commands
 {
     public class RelayCommand : ICommand
     {

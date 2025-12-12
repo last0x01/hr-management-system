@@ -1,8 +1,8 @@
-﻿using Front_End.HR_MS.Utilities;
+﻿using HR_MS.Utilities;
 
-namespace Front_End.HR_MS.MVVM.Models
+namespace HR_MS.MVVM.Models
 {
-    public class clsPerson : clsNotifyObject
+    public class clsPersonUiModel : clsNotifyObject
     {
         /*
          Phone allows null && Email allows null && Address allows null
@@ -16,7 +16,7 @@ namespace Front_End.HR_MS.MVVM.Models
         private string _Gender;
         private string? _Address;
 
-        public clsPerson()
+        public clsPersonUiModel()
         {
             _ID = -1;
             _FirstName = "";

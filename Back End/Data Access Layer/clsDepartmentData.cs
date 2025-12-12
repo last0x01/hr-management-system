@@ -5,6 +5,46 @@ namespace Data_Access_Layer
 {
     public class clsDepartmentData
     {
+        public static clsDepartment? GetDepartmentByID(int departmentID)
+        {
+            const string query =
+                @"SELECT DepartmentID, DepartmentName, IsActive, Description
+          FROM Departments
+          WHERE DepartmentID = @DepartmentID";
+
+            using (NpgsqlConnection connection =
+                   new NpgsqlConnection(clsDataAccessSettings.ConnectionString))
+            using (NpgsqlCommand command = new NpgsqlCommand(query, connection))
+            {
+                command.Parameters.AddWithValue("@DepartmentID", departmentID);
+
+                try
+                {
+                    connection.Open();
+
+                    using (NpgsqlDataReader reader = command.ExecuteReader())
+                    {
+                        if (!reader.Read())
+                            return null;
+
+                        return new clsDepartment
+                        {
+                            DepartmentID = (int)reader["DepartmentID"],
+                            DepartmentName = (string)reader["DepartmentName"],
+                            IsActive = (bool)reader["IsActive"],
+                            Description = reader["Description"] == DBNull.Value
+                                ? string.Empty
+                                : (string)reader["Description"]
+                        };
+                    }
+                }
+                catch
+                {
+                    return null;
+                }
+            }
+        }
+
         public static int AddNewDepartment(clsDepartment Department)
         {
             int NewDepartmentID = 0;

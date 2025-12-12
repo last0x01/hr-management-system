@@ -2,78 +2,36 @@
 {
     public class clsPerson
     {
-        /*
-         Phone allows null && Email allows null && Address allows null
-         */
-        private int _ID;
-        private string _FirstName;
-        private string _LastName;
-        private int _Age;
-        private string? _Phone;
-        private string? _Email;
-        private string _Gender;
-        private string? _Address;
+        public int PersonID { get; set; } = -1;
+
+        public string FirstName { get; set; } = string.Empty;
+
+        public string LastName { get; set; } = string.Empty;
+
+        public int Age { get; set; }
+
+        public string? Phone { get; set; }
+
+        public string? Email { get; set; }
+
+        public string Gender { get; set; } = string.Empty;
+
+        public string? Address { get; set; }
 
         public clsPerson()
         {
-            _ID = -1;
-            _FirstName = "";
-            _LastName = "";
-            _Age = 0;
-            _Phone = null;
-            _Email = null;
-            _Gender = "";
-            _Address = null;
         }
 
-        public int ID
+        public clsPerson(clsPerson person)
         {
-            get => _ID;
-            set { _ID = value; }
+            PersonID = person.PersonID;
+            FirstName = person.FirstName;
+            LastName = person.LastName;
+            Age = person.Age;
+            Phone = person.Phone;
+            Email = person.Email;
+            Gender = person.Gender;
+            Address = person.Address;
         }
-
-        public string FirstName
-        {
-            get => _FirstName;
-            set { _FirstName = value; }
-        }
-
-        public string LastName
-        {
-            get => _LastName;
-            set { _LastName = value; }
-        }
-
-        public int Age
-        {
-            get => _Age;
-            set { _Age = value; }
-        }
-
-        public string? Phone
-        {
-            get => _Phone;
-            set { _Phone = value; }
-        }
-
-        public string? Email
-        {
-            get => _Email;
-            set { _Email = value; }
-        }
-
-        public string Gender
-        {
-            get => _Gender;
-            set { _Gender = value; }
-        }
-
-        public string? Address
-        {
-            get => _Address;
-            set { _Address = value; }
-        }
-
-
     }
 }

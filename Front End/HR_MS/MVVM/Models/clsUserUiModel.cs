@@ -1,22 +1,22 @@
-﻿using Front_End.HR_MS.Utilities;
+﻿using HR_MS.Utilities;
 
-namespace Front_End.HR_MS.MVVM.Models
+namespace HR_MS.MVVM.Models
 {
-    public class clsUser : clsNotifyObject
+    public class clsUserUiModel : clsNotifyObject
     {
         private int _UserID;
         private int _PersonID;
-        private clsPerson _Person;
+        private clsPersonUiModel _Person;
         private string _Username;
         private string _Passwrod;
 
-        public clsUser()
+        public clsUserUiModel()
         {
             _UserID = -1;
             _PersonID = -1;
             _Username = "";
             _Passwrod = "";
-            _Person = new clsPerson();
+            _Person = new clsPersonUiModel();
         }
 
         public int UserID
@@ -40,7 +40,7 @@ namespace Front_End.HR_MS.MVVM.Models
             set { _Passwrod = value; OnPropertyChanged(); }
         }
 
-        public clsPerson Person
+        public clsPersonUiModel Person
         {
             get => _Person;
             set { _Person = value; OnPropertyChanged(); }

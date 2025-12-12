@@ -1,8 +1,8 @@
-﻿using Front_End.HR_MS.Utilities;
+﻿using HR_MS.Utilities;
 
-namespace Front_End.HR_MS.MVVM.Models
+namespace HR_MS.MVVM.Models
 {
-    public class clsDepartment : clsNotifyObject
+    public class clsDepartmentUiModel : clsNotifyObject
     {
 
         private int _DepartmentID;
@@ -15,7 +15,7 @@ namespace Front_End.HR_MS.MVVM.Models
 
 
 
-        public clsDepartment()
+        public clsDepartmentUiModel()
         {
             _DepartmentID = -1;
             _DepartmentName = "";

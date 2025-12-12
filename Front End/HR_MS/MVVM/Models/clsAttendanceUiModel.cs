@@ -1,8 +1,8 @@
-﻿using Front_End.HR_MS.Utilities;
+﻿using HR_MS.Utilities;
 
-namespace Front_End.HR_MS.MVVM.Models
+namespace HR_MS.MVVM.Models
 {
-    public class clsAttendance : clsNotifyObject
+    public class clsAttendanceUiModel : clsNotifyObject
     {
         /*
          Check in allows null
@@ -18,7 +18,7 @@ namespace Front_End.HR_MS.MVVM.Models
         private int _CreatedByUserID;
         private string? _Status;
 
-        public clsAttendance()
+        public clsAttendanceUiModel()
         {
             _AttendanceID = -1;
             _EmployeeID = -1;
