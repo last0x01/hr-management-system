@@ -85,7 +85,7 @@ namespace Data_Access_Layer
                    new NpgsqlConnection(clsDataAccessSettings.ConnectionString))
             {
                 NpgsqlCommand Command = new NpgsqlCommand(
-                    "CALL update_department(@DeptID, @Name, @Description, @IsActive, @Updated)",
+                    "select  update_department(@DeptID, @Name, @Description, @IsActive)",
                     Connection);
 
                 Command.Parameters.AddWithValue("@DeptID", Department.DepartmentID);
@@ -93,18 +93,14 @@ namespace Data_Access_Layer
                 Command.Parameters.AddWithValue("@Description", Department.Description);
                 Command.Parameters.AddWithValue("@IsActive", Department.IsActive);
 
-                NpgsqlParameter OutParameter = new NpgsqlParameter("@Updated", NpgsqlTypes.NpgsqlDbType.Boolean)
-                {
-                    Direction = System.Data.ParameterDirection.Output
-                };
-                Command.Parameters.Add(OutParameter);
+
 
                 try
                 {
                     Connection.Open();
-                    Command.ExecuteNonQuery();
+                    object? result = Command.ExecuteScalar();
 
-                    IsUpdated = OutParameter.Value is bool Updated && Updated;
+                    IsUpdated = result is bool Updated && Updated;
                 }
                 catch
                 {
@@ -123,23 +119,19 @@ namespace Data_Access_Layer
                    new NpgsqlConnection(clsDataAccessSettings.ConnectionString))
             {
                 NpgsqlCommand Command = new NpgsqlCommand(
-                    "CALL delete_department(@DeptID, @Deleted)",
+                    "select   delete_department(@DeptID)",
                     Connection);
 
                 Command.Parameters.AddWithValue("@DeptID", DepartmentID);
 
-                NpgsqlParameter OutParameter = new NpgsqlParameter("@Deleted", NpgsqlTypes.NpgsqlDbType.Boolean)
-                {
-                    Direction = System.Data.ParameterDirection.Output
-                };
-                Command.Parameters.Add(OutParameter);
+
 
                 try
                 {
                     Connection.Open();
-                    Command.ExecuteNonQuery();
+                    object? result = Command.ExecuteScalar();
 
-                    IsDeleted = OutParameter.Value is bool Deleted && Deleted;
+                    IsDeleted = result is bool Deleted && Deleted;
                 }
                 catch
                 {

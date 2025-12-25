@@ -10,6 +10,7 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace HR_MS.MVVM.Views.Departments
@@ -17,7 +18,7 @@ namespace HR_MS.MVVM.Views.Departments
     /// <summary>
     /// Interaction logic for DepartmentsView.xaml
     /// </summary>
-    public partial class DepartmentsView : Window
+    public partial class DepartmentsView : UserControl
     {
         public DepartmentsView()
         {

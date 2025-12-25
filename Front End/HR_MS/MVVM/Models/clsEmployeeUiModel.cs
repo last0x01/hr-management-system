@@ -1,4 +1,5 @@
-﻿using HR_MS.Utilities;
+﻿using Back_End.Models;
+using HR_MS.Utilities;
 
 namespace HR_MS.MVVM.Models
 {
@@ -10,18 +11,34 @@ namespace HR_MS.MVVM.Models
 
         //Deprtment Allows Null if the employee is CEO
         private int? _DepartmentID;
-        private decimal _Salary;
-        private string _Job_Position;
+        private decimal _Salary; //Allow Null For Good UI for Removing 0 
+        private string _JobPosition;
+        private string? _DepartmentName; // جديد
 
         public clsEmployeeUiModel()
         {
             _EmployeeID = -1;
             _PersonID = -1;
             _DepartmentID = null;
-            _Salary = 0;
-            _Job_Position = "";
+            _Salary = default;
+            _JobPosition = "";
             _Person = new clsPersonUiModel();
         }
+
+        public clsEmployee ToEmployee()
+        {
+            return new clsEmployee
+            {
+                EmployeeID = this.EmployeeID,
+                PersonID = this.PersonID,
+                Salary = this.Salary,
+                JobPosition = this.JobPosition,
+                DepartmentID = this.DepartmentID,
+                Person = this.Person.ToPerson()
+            };
+        }
+
+
 
         public clsEmployeeUiModel(Back_End.Models.clsEmployee Employee)
         {
@@ -30,17 +47,33 @@ namespace HR_MS.MVVM.Models
             _PersonID = Employee.PersonID;
             _DepartmentID = Employee.DepartmentID;
             _Salary = Employee.Salary;
-            _Job_Position = Employee.JobPosition;
-            _Person = new clsPersonUiModel();
+            _JobPosition = Employee.JobPosition;
 
-            _Person.ID = Employee.Person.PersonID;
-            _Person.FirstName = Employee.Person.FirstName;
-            _Person.LastName = Employee.Person.LastName;
-            _Person.Age = Employee.Person.Age;
-            _Person.Gender = Employee.Person.Gender;
-            _Person.Phone = Employee.Person.Phone;
-            _Person.Email = Employee.Person.Email;
-            _Person.Address = Employee.Person.Address;
+            if (Employee.Person != null)
+            {
+                _Person = new clsPersonUiModel
+                {
+                    ID = Employee.Person.PersonID,
+                    FirstName = Employee.Person.FirstName,
+                    LastName = Employee.Person.LastName,
+                    Age = Employee.Person.Age,
+                    Gender = Employee.Person.Gender,
+                    Phone = Employee.Person.Phone,
+                    Email = Employee.Person.Email,
+                    Address = Employee.Person.Address
+                };
+            }
+            else
+            {
+
+                _Person = new clsPersonUiModel();
+            }
+        }
+
+        public string? DepartmentName
+        {
+            get => _DepartmentName;
+            set { _DepartmentName = value; OnPropertyChanged(); }
         }
 
         public int EmployeeID
@@ -66,12 +99,11 @@ namespace HR_MS.MVVM.Models
             set { _Salary = value; OnPropertyChanged(); }
         }
 
-        public string Job_Position
+        public string JobPosition
         {
-            get => _Job_Position;
-            set { _Job_Position = value; OnPropertyChanged(); }
+            get => _JobPosition;
+            set { _JobPosition = value; OnPropertyChanged(); }
         }
-
 
         public clsPersonUiModel Person
         {

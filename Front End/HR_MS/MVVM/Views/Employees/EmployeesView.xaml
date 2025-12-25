@@ -1,41 +1,84 @@
-﻿<Window x:Class="HR_MS.MVVM.Views.Employees.EmployeesView"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:HR_MS.MVVM.Views.Employees"
-        mc:Ignorable="d"
-               Title="Employees List" Height="600" Width="1200" WindowStartupLocation="CenterScreen">
-    <Grid>
+﻿<UserControl x:Class="HR_MS.MVVM.Views.Employees.EmployeesView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:HR_MS.MVVM.Views.Employees"
+             xmlns:vm="clr-namespace:Front_End.HR_MS.MVVM.ViewModels.Employees"
+               xmlns:icon="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
 
-        <DataGrid ItemsSource="{Binding Employees}"
-                  SelectedItem="{Binding SelectedEmployee}"
-                  AutoGenerateColumns="False"
-                  Grid.Column="0"
-                  Margin="10,50"
-                  IsReadOnly="True"
-                  SelectionMode="Single"
-                  HeadersVisibility="Column"
-                  CanUserAddRows="False" Background="White" Foreground="Black"
-                  >
+    <UserControl.DataContext>
+        <vm:EmployeesViewModel/>
+    </UserControl.DataContext>
 
+        <StackPanel>
+        <TextBlock Text="Employees"  Foreground="#537188" FontSize="30" FontWeight="Bold"
+                                 DockPanel.Dock="Top" TextAlignment="Center" />
+
+        <Grid Margin="0,0,0,15">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <Button Grid.Column="1" Command="{Binding AddEmployeeCommand}"
+          Style="{StaticResource pagingButton}">
+                <StackPanel Orientation="Horizontal">
+                    <icon:PackIconMaterial Kind="Plus"
+                                 Style="{StaticResource menuButtonIcon}"
+                                 Margin="0,5"/>
+                    <TextBlock Text=" Add Employee"/>
+                </StackPanel>
+            </Button>
+        </Grid>
+
+        <DataGrid SelectedItem="{Binding SelectedEmployee, Mode=TwoWay}"  ItemsSource="{Binding Employees}" Style="{DynamicResource DataGridStyle1}" CellStyle="{DynamicResource DataGridCellStyle1}" IsReadOnly="True"
+                        RowStyle="{DynamicResource DataGridRowStyle1}" Grid.Row="5" AutoGenerateColumns="False" MaxHeight="380">
+            <!--Data-->
             <DataGrid.Columns>
-                <DataGridTextColumn Header="ID" Binding="{Binding Person.ID}" Width="60"/>
-                <DataGridTextColumn Header="First Name" Binding="{Binding Person.FirstName}" Width="100"/>
-                <DataGridTextColumn Header="Last Name" Binding="{Binding Person.LastName}" Width="100"/>
-                <DataGridTextColumn Header="Age" Binding="{Binding Person.Age}" Width="60"/>
-                <DataGridTextColumn Header="Email" Binding="{Binding Person.Email}" Width="200"/>
-                <DataGridTextColumn Header="Phone" Binding="{Binding Person.Phone}" Width="120"/>
-                <DataGridTextColumn Header="Gender" Binding="{Binding Person.Gender}" Width="80"/>
-                <DataGridTextColumn Header="Address" Binding="{Binding Person.Address}" Width="100" />
+                 <DataGridTextColumn Header="Employee ID"
+                            Binding="{Binding EmployeeID}" />
 
-                <DataGridTextColumn Header="Salary" Binding="{Binding Salary}" Width="100"/>
-                <DataGridTextColumn Header="Position" Binding="{Binding Job_Position}" Width="150"/>
-                <DataGridTextColumn Header="Department" Binding="{Binding DepartmentID}" Width="80"/>
+        <DataGridTextColumn Header="Full Name"
+                            Binding="{Binding Person.FullName}" Width="140"/>
 
+        <DataGridTextColumn Header="Age"
+                            Binding="{Binding Person.Age}" />
+
+        <DataGridTextColumn Header="Email"
+                            Binding="{Binding Person.Email}" />
+
+        <DataGridTextColumn Header="Phone"
+                            Binding="{Binding Person.Phone}" />
+
+        <DataGridTextColumn Header="Salary"
+                            Binding="{Binding Salary}" />
+
+        <DataGridTextColumn Header="Position"
+                            Binding="{Binding JobPosition}" />
+
+        <DataGridTextColumn Header="Department"
+                            Binding="{Binding DepartmentName}" />
+
+
+                <DataGridTemplateColumn Width="100">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <Button Command="{Binding DataContext.EditEmployeeCommand,RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding}" Style="{StaticResource actionButton}"  Background="#3a9bdc">
+                                    <icon:PackIconMaterial Kind="AccountEdit" Style="{StaticResource actionButtonIcon}"/>
+                                </Button>
+                                <Button Command="{Binding DataContext.DeleteEmployeeCommand,RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding}" Style="{StaticResource actionButton}"  Background="#df2c14">
+                                    <icon:PackIconMaterial Kind="Delete" Style="{StaticResource actionButtonIcon}"/>
+                                </Button>
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
             </DataGrid.Columns>
-
         </DataGrid>
 
-    </Grid>
-</Window>
+    </StackPanel>
+</UserControl>

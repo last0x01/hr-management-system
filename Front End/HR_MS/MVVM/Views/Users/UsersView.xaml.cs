@@ -10,6 +10,7 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace HR_MS.MVVM.Views.Users
@@ -17,7 +18,7 @@ namespace HR_MS.MVVM.Views.Users
     /// <summary>
     /// Interaction logic for UsersView.xaml
     /// </summary>
-    public partial class UsersView : Window
+    public partial class UsersView : UserControl
     {
         public UsersView()
         {

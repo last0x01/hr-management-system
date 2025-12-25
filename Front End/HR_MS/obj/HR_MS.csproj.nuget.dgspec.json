@@ -290,6 +290,14 @@
         "net8.0-windows7.0": {
           "targetAlias": "net8.0-windows",
           "dependencies": {
+            "FontAwesome.Sharp": {
+              "target": "Package",
+              "version": "[6.6.0, )"
+            },
+            "MahApps.Metro.IconPacks.Material": {
+              "target": "Package",
+              "version": "[6.2.1, )"
+            },
             "Npgsql": {
               "target": "Package",
               "version": "[10.0.0, )"

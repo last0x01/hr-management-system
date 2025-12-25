@@ -1,4 +1,5 @@
-﻿using HR_MS.Utilities;
+﻿using Back_End.Models;
+using HR_MS.Utilities;
 
 namespace HR_MS.MVVM.Models
 {
@@ -22,6 +23,26 @@ namespace HR_MS.MVVM.Models
             _IsActive = false;
             _Description = "";
         }
+
+        public clsDepartmentUiModel(clsDepartment department)
+        {
+            _DepartmentID = department.DepartmentID;
+            _DepartmentName = department.DepartmentName;
+            _IsActive = department.IsActive;
+            _Description = department.Description;
+        }
+
+        public clsDepartment ToDepartment()
+        {
+            return new clsDepartment
+            {
+                DepartmentID = this.DepartmentID,
+                DepartmentName = this.DepartmentName,
+                IsActive = this.IsActive,
+                Description = this.Description,
+            };
+        }
+
 
         public int DepartmentID
         {

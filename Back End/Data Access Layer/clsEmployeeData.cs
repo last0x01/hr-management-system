@@ -131,27 +131,20 @@ namespace Data_Access_Layer
                 Command.Parameters.AddWithValue("@DepartmentID", Employee.DepartmentID ?? (object)DBNull.Value);
                 Command.Parameters.AddWithValue("@job_position", Employee.JobPosition);
 
-                // this is Will return if the update operation is completed 
 
-                NpgsqlParameter OutParameter = new NpgsqlParameter("@Updated", NpgsqlTypes.NpgsqlDbType.Boolean)
-                {
-                    Direction = System.Data.ParameterDirection.Output
-                };
-
-                Command.Parameters.Add(OutParameter);
 
                 try
                 {
                     Connection.Open();
 
-                    Command.ExecuteNonQuery();
+                    object? result = Command.ExecuteScalar();
 
                     // Safely read the OUT parameter:
                     // - Checks that the value is a non-null boolean.
                     // - If so, assigns it to 'updated' and returns its value.
                     // - If null or not a bool → result is false.
 
-                    IsUpdated = OutParameter.Value is bool updated && updated;
+                    IsUpdated = result is bool updated && updated;
 
 
                 }
@@ -166,37 +159,31 @@ namespace Data_Access_Layer
             return IsUpdated;
         }
 
-        public static bool DeleteEmployee(int EmployeeID)
+        public static bool DeleteEmployee(int employeeID)
         {
-            bool IsDeleted = false;
+            using NpgsqlConnection connection = new NpgsqlConnection(clsDataAccessSettings.ConnectionString);
 
-            using (NpgsqlConnection Connection = new NpgsqlConnection(clsDataAccessSettings.ConnectionString))
+            using NpgsqlCommand Command = new NpgsqlCommand("SELECT delete_employee(@EmployeeID)", connection);
+
+            Command.Parameters.AddWithValue("@EmployeeID", employeeID);
+
+
+            try
             {
-                NpgsqlCommand Command = new NpgsqlCommand("call delete_employee(@EmployeeID,@Deleted)", Connection);
+                connection.Open();
 
-                Command.Parameters.AddWithValue("@EmployeeID", EmployeeID);
+                object? result = Command.ExecuteScalar();
 
-                NpgsqlParameter OutParameter = new NpgsqlParameter("@Deleted", NpgsqlTypes.NpgsqlDbType.Boolean)
-                {
-                    Direction = System.Data.ParameterDirection.Output
-                };
+                return result is bool deleted && deleted;
+            }
+            catch
+            {
 
-                Command.Parameters.Add(OutParameter);
-
-                try
-                {
-                    Connection.Open();
-                    Command.ExecuteNonQuery();
-
-                    IsDeleted = OutParameter.Value is bool Deleted && Deleted;
-                }
-                catch
-                {
-                }
             }
 
-            return IsDeleted;
+            return false;
         }
+
 
 
         public static List<clsEmployee> GetAllEmployees()
