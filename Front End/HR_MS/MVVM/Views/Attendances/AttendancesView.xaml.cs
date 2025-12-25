@@ -10,6 +10,7 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace HR_MS.MVVM.Views.Attendances
@@ -17,7 +18,7 @@ namespace HR_MS.MVVM.Views.Attendances
     /// <summary>
     /// Interaction logic for AttendancesView.xaml
     /// </summary>
-    public partial class AttendancesView : Window
+    public partial class AttendancesView : UserControl
     {
         public AttendancesView()
         {

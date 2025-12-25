@@ -10,6 +10,7 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace HR_MS.MVVM.Views.Home
@@ -17,7 +18,7 @@ namespace HR_MS.MVVM.Views.Home
     /// <summary>
     /// Interaction logic for HomeView.xaml
     /// </summary>
-    public partial class HomeView : Window
+    public partial class HomeView : UserControl
     {
         public HomeView()
         {

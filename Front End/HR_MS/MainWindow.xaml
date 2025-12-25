@@ -1,22 +1,165 @@
 ﻿<Window x:Class="HR_MS.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-
+        xmlns:icon="http://metro.mahapps.com/winfx/xaml/iconpacks"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:local="clr-namespace:HR_MS"
         mc:Ignorable="d"
-        Title="MainWindow" Height="650" Width="1000"
-        AllowsTransparency="True"
-        WindowStartupLocation="CenterScreen"
-        WindowStyle="None"
-        Background="White">
+        Height="720" Width="1280"
+        WindowStartupLocation="CenterScreen" WindowStyle="SingleBorderWindow"
+        WindowState="Maximized"
+        Background="#eff2f7">
+
+    <Window.DataContext>
+        <local:MainWindowViewModel/>
+    </Window.DataContext>
 
 
-    <Grid>
 
-      
+    <Border Background="#eff2f7" CornerRadius="30"  >
+        <Grid>
+            
+            
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="200"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
 
-    </Grid>
+            <!--Left Menu-->
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <!--Menu Icon-->
+                <Button  Margin="20 28 0 35" Style="{StaticResource topButton}">
+                    <icon:PackIconMaterial Kind="Menu" Width="15" Height="15"/>
+                </Button>
+
+                <Border Grid.Row="1" Background="#394867" CornerRadius="0 50 30 0">
+                    <DockPanel>
+                        <Border Width="80" Height="80" Padding="3" Background="White" 
+                                CornerRadius="100" DockPanel.Dock="Top" HorizontalAlignment="Left" Margin="20 -30 0 0">
+                            <Ellipse>
+                                <Ellipse.Fill>
+                                    <ImageBrush ImageSource="pack://application:,,,/Images/hr.png"/>
+
+                                </Ellipse.Fill>
+                            </Ellipse>
+                        </Border>
+
+                        <!--Menu Titles-->
+                        <TextBlock Text="HR System" Foreground="White" FontSize="22" FontWeight="SemiBold"
+                                       DockPanel.Dock="Top" TextAlignment="Center" Margin="5 25 0 10"/>
+                     
+                        <!--Menu Separator-->
+                        <Separator Margin="25" DockPanel.Dock="Top" Height="1" Background="#7e5fde"/>
+
+                        <!--Menu Buttons-->
+                        <StackPanel DockPanel.Dock="Top">
+                            <ToggleButton Style="{StaticResource menuButton}" Command="{Binding ShowHomeView}">
+                                <StackPanel Orientation="Horizontal">
+                                    <icon:PackIconMaterial Kind="Home" Style="{StaticResource menuButtonIcon}"/>
+                                    <TextBlock Text="Home"/>
+                                </StackPanel>
+                            </ToggleButton>
+
+                            <ToggleButton Style="{StaticResource menuButton}" Command="{Binding ShowEmployeesView}">
+                                <StackPanel Orientation="Horizontal">
+                                    <icon:PackIconMaterial Kind="AccountMultiple" Style="{StaticResource menuButtonIcon}"/>
+                                    <TextBlock Text="Employees"/>
+                                </StackPanel>
+                            </ToggleButton>
+
+                            <ToggleButton Style="{StaticResource menuButton}" Command="{Binding ShowAttendancesView}">
+                                <StackPanel Orientation="Horizontal">
+                                    <icon:PackIconMaterial Kind="CalendarClock" Style="{StaticResource menuButtonIcon}"/>
+                                    <TextBlock Text="Attendances"/>
+                                </StackPanel>
+                            </ToggleButton>
+
+                            <ToggleButton Style="{StaticResource menuButton}" Command="{Binding ShowUsersView}">
+                                <StackPanel Orientation="Horizontal">
+                                    <icon:PackIconMaterial Kind="AccountCog" Style="{StaticResource menuButtonIcon}"/>
+                                    <TextBlock Text="Users"/>
+                                </StackPanel>
+                            </ToggleButton>
+
+                            <ToggleButton Style="{StaticResource menuButton}" Command="{Binding ShowDepartmentsView}">
+                                <StackPanel Orientation="Horizontal">
+                                    <icon:PackIconMaterial Kind="OfficeBuilding" Style="{StaticResource menuButtonIcon}"/>
+                                    <TextBlock Text="Departments"/>
+                                </StackPanel>
+                            </ToggleButton>
+
+                        </StackPanel>
+
+                        <ToggleButton Style="{StaticResource menuButton}" VerticalAlignment="Bottom" 
+                                    DockPanel.Dock="Bottom" Margin="15 0 15 20">
+                            <StackPanel Orientation="Horizontal">
+                                <icon:PackIconMaterial Kind="Logout" Style="{StaticResource menuButtonIcon}"/>
+                                <TextBlock Text="Logout"/>
+                            </StackPanel>
+                        </ToggleButton>
+
+                    </DockPanel>
+                </Border>
+            </Grid>
+
+            <!--Main Section-->
+            <Grid Grid.Column="1" Margin="30 20 20 20">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+
+                <!-- Account status -->
+                <StackPanel Grid.Row="1" >
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                        <Border Width="40" Height="40" Padding="3" Background="#9BA4B5" 
+                                CornerRadius="100" DockPanel.Dock="Top" Margin="20 0 0 0">
+                            <!--<Ellipse>
+                                <Ellipse.Fill>
+                                    <ImageBrush ImageSource="/Images/nurse.png"/>
+                                </Ellipse.Fill>
+                            </Ellipse>-->
+                        </Border>
+                        <StackPanel Margin="10 0 0 0">
+                            <TextBlock Text="Name" Foreground="#394867" FontSize="14" FontWeight="SemiBold"
+                                       DockPanel.Dock="Top" />
+                            <TextBlock Text="User" Foreground="#9BA4B5" FontSize="14" FontWeight="SemiBold"
+                                       DockPanel.Dock="Top" />
+                        </StackPanel>
+
+                    </StackPanel>
+
+                </StackPanel>
+
+                <!--Seperator-->
+                <Separator Height="1" Grid.Row="2" Background="#dae2ea" Margin="0,54,0,0"/>
+
+           
+
+                <!--Members DataGrid-->
+                <ContentControl Grid.Row="5"
+                            Margin="10,10,10,10"
+                            Content="{Binding CurrentView}" Grid.RowSpan="2"
+                            />
+
+ 
+
+            </Grid>
+
+        </Grid>
+    </Border>
+
+
 
 </Window>
-

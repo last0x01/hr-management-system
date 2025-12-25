@@ -1,90 +1,44 @@
 ﻿using Back_End.Models;
+using Business_Layer.Interfaces;
 using Data_Access_Layer;
 
 namespace Business_Layer
 {
-    public class UserService
+
+    public class UserService : IUserService
     {
-        private enum enMode { Add = 1, Update = 2 }
-        private enMode _Mode = enMode.Add;
 
-        private int _UserID;
-        private int _PersonID;
-        private clsPerson _Person;
-        private string _Username;
-        private string _Password;
 
-        public UserService()
+
+        public clsUser? GetUserByID(int UserID)
         {
-            _UserID = -1;
-            _PersonID = -1;
-            _Person = new clsPerson();
-            _Username = string.Empty;
-            _Password = string.Empty;
 
-            _Mode = enMode.Add;
+            return clsUserData.GetUserByID(UserID);
         }
 
-        public UserService(clsUser user)
+        public List<clsUser> GetAllUsers()
         {
-            _UserID = user.UserID;
-            _PersonID = user.PersonID;
-            _Person = new clsPerson(user.Person);
-            _Username = user.Username;
-            _Password = user.Password;
-
-            _Mode = enMode.Update;
+            return clsUserData.GetAllUsers();
         }
 
 
-        public static clsUser? GetUserByID(int userID)
+
+        public bool AddUser(clsUser User)
         {
+            return clsUserData.AddNewUser(User) != -1;
+        }
 
+        public bool UpdateUser(clsUser User)
+        {
+            return clsUserData.UpdateUser(User);
+        }
 
-            return clsUserData.GetUserByID(userID);
+        public bool DeleteUser(int UserID)
+        {
+            return clsUserData.DeleteUser(UserID);
         }
 
 
-        private clsUser _BuildUser()
-        {
-            return new clsUser
-            {
-                UserID = _UserID,
-                PersonID = _PersonID,
-                Person = _Person,
-                Username = _Username,
-                Password = _Password
-            };
-        }
 
-        private bool _AddUser()
-        {
-            return clsUserData.AddNewUser(_BuildUser()) != -1;
-        }
-
-        private bool _UpdateUser()
-        {
-            return clsUserData.UpdateUser(_BuildUser());
-        }
-
-
-        public bool Save()
-        {
-            switch (_Mode)
-            {
-                case enMode.Add:
-                    if (_AddUser())
-                    {
-                        _Mode = enMode.Update;
-                        return true;
-                    }
-                    break;
-
-                case enMode.Update:
-                    return _UpdateUser();
-            }
-
-            return false;
-        }
     }
 }

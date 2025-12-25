@@ -3,10 +3,143 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:HR_MS.MVVM.Views.Employees"
+        xmlns:icon="http://metro.mahapps.com/winfx/xaml/iconpacks"
+        xmlns:conv="clr-namespace:HR_MS.MVVM.Converters"
         mc:Ignorable="d"
-        Title="AddEditEmployeeView" Height="450" Width="800">
-    <Grid>
-        
+        Title="Add / Edit Employee"
+        Height="500"
+        Width="800"
+        WindowStartupLocation="CenterScreen">
+
+    <Window.Resources>
+        <conv:EnumToBooleanConverter x:Key="EnumToBooleanConverter"/>
+    </Window.Resources>
+
+        <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Title -->
+        <TextBlock Text="Employee Information"
+                   FontSize="22"
+                   FontWeight="Bold"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"
+                   Margin="0,0,0,15"/>
+
+        <!-- Content -->
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Left Column -->
+            <StackPanel Margin="0,0,15,0">
+
+                <TextBlock Text="First Name" Style="{StaticResource FieldLabel}"/>
+                <TextBox Style="{StaticResource RoundedTextBox}"
+             Text="{Binding Employee.Person.FirstName, Mode=TwoWay}"/>
+
+                <TextBlock Text="Last Name" Style="{StaticResource FieldLabel}"/>
+                <TextBox Style="{StaticResource RoundedTextBox}"
+             Text="{Binding Employee.Person.LastName, Mode=TwoWay}"/>
+
+                <TextBlock Text="Age" Style="{StaticResource FieldLabel}"/>
+                <TextBox Style="{StaticResource RoundedTextBox}"
+             Text="{Binding Employee.Person.Age, Mode=TwoWay}"/>
+
+                <TextBlock Text="Phone" Style="{StaticResource FieldLabel}"/>
+                <TextBox Style="{StaticResource RoundedTextBox}"
+             Text="{Binding Employee.Person.Phone, Mode=TwoWay}"/>
+
+                <TextBlock Text="Email" Style="{StaticResource FieldLabel}"/>
+                <TextBox Style="{StaticResource RoundedTextBox}"
+             Text="{Binding Employee.Person.Email, Mode=TwoWay}"/>
+
+            </StackPanel>
+
+
+            <!-- Right Column -->
+            <StackPanel Grid.Column="1">
+
+                <TextBlock Text="Job Position" Style="{StaticResource FieldLabel}"/>
+                <TextBox Style="{StaticResource RoundedTextBox}"
+             Text="{Binding Employee.JobPosition, Mode=TwoWay}"/>
+
+                <TextBlock Text="Salary" Style="{StaticResource FieldLabel}"/>
+                <TextBox Style="{StaticResource RoundedTextBox}"
+             Text="{Binding Employee.Salary, Mode=TwoWay}"/>
+
+                <TextBlock Text="Department" Style="{StaticResource FieldLabel}"/>
+                <ComboBox Background="White" 
+              ItemsSource="{Binding Departments}"
+              DisplayMemberPath="DepartmentName"
+              SelectedValuePath="DepartmentID"
+              SelectedValue="{Binding Employee.DepartmentID, Mode=TwoWay}"
+             Height="25"
+                          Width="360"/>
+
+                <TextBlock Text="Address" Style="{StaticResource FieldLabel}"/>
+                <TextBox Style="{StaticResource RoundedTextBox}"
+             Height="70"
+             AcceptsReturn="True"
+             Text="{Binding Employee.Person.Address, Mode=TwoWay}"/>
+
+
+
+
+                <StackPanel Orientation="Horizontal" Margin="10">
+                    <RadioButton Content="Male"
+                 IsChecked="{Binding SelectedGender, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Male}"
+                 Margin="0,0,10,0"/>
+                    <RadioButton Content="Female"
+                 IsChecked="{Binding SelectedGender, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Female}"/>
+                </StackPanel>
+            </StackPanel>
+
+        </Grid>
+
+        <!-- Buttons -->
+        <StackPanel Grid.Row="2"
+            Orientation="Horizontal"
+            HorizontalAlignment="Right"
+            Margin="0,20,0,0">
+
+            <!-- Save Button -->
+            <Button Style="{StaticResource pagingButton}"
+            Width="100"
+            Margin="0,0,10,0"
+            Command="{Binding SaveCommand}">
+
+                <StackPanel Orientation="Horizontal">
+                    <icon:PackIconMaterial Kind="ContentSave"
+                                   Width="16"
+                                   Height="16"
+                                   Margin="0,0,5,0"/>
+                    <TextBlock Text="Save"/>
+                </StackPanel>
+            </Button>
+
+            <!-- Cancel Button -->
+            <Button Style="{StaticResource pagingButton}"
+            Width="100"
+            IsCancel="True"
+            Command="{Binding CloseCommand}">
+
+                <StackPanel Orientation="Horizontal">
+                    <icon:PackIconMaterial Kind="Close"
+                                   Width="16"
+                                   Height="16"
+                                   Margin="0,0,5,0"/>
+                    <TextBlock Text="Cancel"/>
+                </StackPanel>
+            </Button>
+
+        </StackPanel>
+
     </Grid>
 </Window>

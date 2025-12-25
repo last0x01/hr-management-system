@@ -1,103 +1,44 @@
 ﻿using Back_End.Models;
+using Business_Layer.Interfaces;
 using Data_Access_Layer;
 
 namespace Business_Layer
 {
-    public class EmployeeService
+    public class EmployeeService : IEmployeeService
     {
-        private enum enMode { Add = 1, Update = 2 }
-        private enMode _Mode = enMode.Add;
-        private int _EmployeeID;
-        private int _PersonID;
-        private clsPerson _Person;
 
-        private int? _DepartmentID;
-        private decimal _Salary;
-        private string _JobPosition;
 
-        public EmployeeService()
-        {
-            _EmployeeID = -1;
-            _PersonID = -1;
-            _DepartmentID = null;
-            _Salary = 0;
-            _JobPosition = "";
-            _Person = new clsPerson();
-
-            _Mode = enMode.Add;
-        }
-
-        public EmployeeService(clsEmployee Employee)
-        {
-            _EmployeeID = Employee.EmployeeID;
-            _PersonID = Employee.PersonID;
-            _DepartmentID = Employee.DepartmentID;
-            _Salary = Employee.Salary;
-            _JobPosition = Employee.JobPosition;
-            _Person = Employee.Person;
-
-            _Mode = enMode.Update;
-        }
-
-        public static clsEmployee? GetEmployeeByID(int EmployeeID)
+        public clsEmployee? GetEmployeeByID(int EmployeeID)
         {
             return clsEmployeeData.GetEmployeeByID(EmployeeID);
 
 
         }
-        public static List<clsEmployee> GetAllEmployees()
+        public List<clsEmployee> GetAllEmployees()
         {
             return clsEmployeeData.GetAllEmployees();
         }
 
-        private clsEmployee _BulidAndGetEmployeeObject()
-        {
-            return new clsEmployee
-            {
-                EmployeeID = _EmployeeID,
-                PersonID = _PersonID,
-                JobPosition = _JobPosition,
-                Salary = _Salary,
-                DepartmentID = _DepartmentID,
-                Person = _Person
-
-            };
-        }
-
-        private bool _UpdateEmployee()
+        public bool UpdateEmployee(clsEmployee Employee)
         {
 
 
-            return clsEmployeeData.UpdateEmployee(_BulidAndGetEmployeeObject());
+            return clsEmployeeData.UpdateEmployee(Employee);
         }
 
 
-        private bool _AddEmployee()
+        public bool AddEmployee(clsEmployee Employee)
         {
 
-            return clsEmployeeData.AddNewEmployee(_BulidAndGetEmployeeObject()) != -1;
+            return clsEmployeeData.AddNewEmployee(Employee) != -1;
         }
 
-
-        public bool Save()
+        public bool DeleteEmployee(int EmployeeID)
         {
-            switch (_Mode)
-            {
-                case enMode.Add:
-                    if (_AddEmployee())
-                    {
-                        _Mode = enMode.Update;
-                        return true;
-                    }
-                    break;
 
-
-                case enMode.Update:
-                    return _UpdateEmployee();
-            }
-
-            return false;
-
+            return clsEmployeeData.DeleteEmployee(EmployeeID);
         }
+
+
     }
 }

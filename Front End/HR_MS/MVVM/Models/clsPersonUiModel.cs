@@ -1,4 +1,5 @@
-﻿using HR_MS.Utilities;
+﻿using Back_End.Models;
+using HR_MS.Utilities;
 
 namespace HR_MS.MVVM.Models
 {
@@ -21,12 +22,28 @@ namespace HR_MS.MVVM.Models
             _ID = -1;
             _FirstName = "";
             _LastName = "";
-            _Age = 0;
+            _Age = default;
             _Phone = null;
             _Email = null;
             _Gender = "";
             _Address = null;
         }
+
+        public clsPerson ToPerson()
+        {
+            return new clsPerson
+            {
+                PersonID = this.ID,
+                FirstName = this.FirstName,
+                LastName = this.LastName,
+                Age = this.Age,
+                Gender = this.Gender,
+                Phone = this.Phone,
+                Email = this.Email,
+                Address = this.Address
+            };
+        }
+
 
         public int ID
         {

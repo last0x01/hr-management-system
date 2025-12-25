@@ -6,15 +6,30 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
+    <ApplicationIcon>hr-high-resolution-logo.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Images\hr.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="hr-high-resolution-logo.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FontAwesome.Sharp" Version="6.6.0" />
+    <PackageReference Include="MahApps.Metro.IconPacks.Material" Version="6.2.1" />
     <PackageReference Include="Npgsql" Version="10.0.0" />
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="10.0.1" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\Back End\Business Layer\Business Layer.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Images\hr.png" />
   </ItemGroup>
 
 </Project>

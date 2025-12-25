@@ -1,4 +1,5 @@
-﻿using HR_MS.Utilities;
+﻿using Back_End.Models;
+using HR_MS.Utilities;
 
 namespace HR_MS.MVVM.Models
 {
@@ -27,6 +28,31 @@ namespace HR_MS.MVVM.Models
             _CheckOut = null;
             _CreatedByUserID = -1;
             _Status = null;
+        }
+
+        public clsAttendanceUiModel(clsAttendance attendance)
+        {
+            _AttendanceID = attendance.AttendanceID;
+            _EmployeeID = attendance.EmployeeID;
+            _AttendanceDate = attendance.AttendanceDate;
+            _CheckIn = attendance.CheckIn;
+            _CheckOut = attendance.CheckOut;
+            _CreatedByUserID = attendance.CreatedByUserID;
+            _Status = attendance.Status;
+        }
+
+        public clsAttendance ToAttendance()
+        {
+            return new clsAttendance
+            {
+                AttendanceID = this.AttendanceID,
+                EmployeeID = this.EmployeeID,
+                AttendanceDate = this.AttendanceDate,
+                CheckIn = this.CheckIn,
+                CheckOut = this.CheckOut,
+                CreatedByUserID = this.CreatedByUserID,
+                Status = this.Status
+            };
         }
 
         public int AttendanceID

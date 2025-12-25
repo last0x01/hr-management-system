@@ -1,0 +1,63 @@
+﻿<Window x:Class="HR_MS.MVVM.Views.MessageDialogView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:icon="http://metro.mahapps.com/winfx/xaml/iconpacks"
+        xmlns:conv="clr-namespace:HR_MS.MVVM.Converters"
+        mc:Ignorable="d"
+        AllowsTransparency="True"
+        ResizeMode="NoResize"
+        Height="200"
+        Width="400"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="None"
+        Background="Transparent">
+
+    <!-- Resources -->
+    <Window.Resources>
+
+        <conv:MessageTypeToIconConverter x:Key="IconConverter"/>
+        <conv:MessageTypeToBrushConverter x:Key="BrushConverter"/>
+    </Window.Resources>
+
+    <!-- Main Container -->
+    <Border CornerRadius="10"
+            Background="{Binding MessageType, Converter={StaticResource BrushConverter}}">
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="80"/>
+                <RowDefinition/>
+                <RowDefinition Height="40"/>
+            </Grid.RowDefinitions>
+
+            <!-- Icon -->
+            <icon:PackIconMaterial
+            Kind="{Binding MessageType, Converter={StaticResource IconConverter}}"
+            Width="48"
+            Height="48"
+            Foreground="White"
+            HorizontalAlignment="Center" Margin="0,22,0,0"/>
+
+
+            <!-- Message Text -->
+            <TextBlock Grid.Row="1"
+           Text="{Binding Message}"
+           FontWeight="Bold"
+           FontSize="20"
+           Foreground="White"
+           HorizontalAlignment="Center"
+           TextWrapping="Wrap"
+           Margin="20,10"/>
+
+
+            <!-- OK Button -->
+            <Button Grid.Row="2"
+                    Content="  OK"
+                    Command="{Binding OKCommand}"
+                    Style="{StaticResource pagingButton}"
+                    Margin="175,5,175,5" />
+        </Grid>
+    </Border>
+</Window>

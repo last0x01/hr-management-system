@@ -10,11 +10,11 @@ none
 false
 TRACE;DEBUG;NET;NET8_0;NETCOREAPP;WINDOWS;WINDOWS7_0;NET5_0_OR_GREATER;NET6_0_OR_GREATER;NET7_0_OR_GREATER;NET8_0_OR_GREATER;NETCOREAPP3_0_OR_GREATER;NETCOREAPP3_1_OR_GREATER;WINDOWS7_0_OR_GREATER
 C:\C# Projects\HR_MS\Front End\HR_MS\App.xaml
-7602366013
+19-1264683835
+1424811152
+421138952536
+2161664692036
+MainWindow.xaml;MVVM\Views\Attendances\AddEditAttendanceView.xaml;MVVM\Views\Attendances\AttendancesView.xaml;MVVM\Views\Departments\AddEditDepartmentView.xaml;MVVM\Views\Departments\DepartmentsView.xaml;MVVM\Views\Employees\AddEditEmployeeView.xaml;MVVM\Views\Employees\EmployeesView.xaml;MVVM\Views\Home\HomeView.xaml;MVVM\Views\MessageDialogView.xaml;MVVM\Views\Users\AddEditUserView.xaml;MVVM\Views\Users\UsersView.xaml;Styles\Buttons.xaml;Styles\ComboBoxes.xaml;Styles\DataGrid.xaml;Styles\GeneralControls.xaml;Styles\Icons.xaml;Styles\MainStyles.xaml;Styles\Sidebar.xaml;Styles\TextBoxes.xaml;
 
-251786601632
-204-2039207646
-MainWindow.xaml;MVVM\Views\Attendances\AttendancesView.xaml;MVVM\Views\Departments\DepartmentsView.xaml;MVVM\Views\Employees\AddEditEmployeeView.xaml;MVVM\Views\Employees\EmployeesView.xaml;MVVM\Views\Home\HomeView.xaml;MVVM\Views\Users\UsersView.xaml;
-
-True
+False
 

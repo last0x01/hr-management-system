@@ -98,7 +98,7 @@ namespace Data_Access_Layer
 
             using NpgsqlConnection Connection = new NpgsqlConnection(clsDataAccessSettings.ConnectionString);
             using NpgsqlCommand Command = new NpgsqlCommand(
-                "CALL update_user(@UserID, @FirstName, @LastName, @Age, @Phone, @Email, @Gender, @Address, @Username, @Password, @Updated)",
+                "select update_user(@UserID, @FirstName, @LastName, @Age, @Phone, @Email, @Gender, @Address, @Username, @Password)",
                 Connection);
 
             Command.Parameters.AddWithValue("@UserID", user.UserID);
@@ -112,18 +112,13 @@ namespace Data_Access_Layer
             Command.Parameters.AddWithValue("@Username", user.Username);
             Command.Parameters.AddWithValue("@Password", user.Password);
 
-            NpgsqlParameter outParam = new NpgsqlParameter("@Updated", NpgsqlTypes.NpgsqlDbType.Boolean)
-            {
-                Direction = System.Data.ParameterDirection.Output
-            };
-            Command.Parameters.Add(outParam);
 
             try
             {
                 Connection.Open();
-                Command.ExecuteNonQuery();
+                object? result = Command.ExecuteScalar();
 
-                IsUpdated = outParam.Value is bool updated && updated;
+                IsUpdated = result is bool updated && updated;
             }
             catch
             {
@@ -137,22 +132,18 @@ namespace Data_Access_Layer
             bool isDeleted = false;
 
             using NpgsqlConnection Connection = new NpgsqlConnection(clsDataAccessSettings.ConnectionString);
-            using NpgsqlCommand Command = new NpgsqlCommand("CALL delete_user(@UserID, @Deleted)", Connection);
+            using NpgsqlCommand Command = new NpgsqlCommand("select delete_user(@UserID)", Connection);
 
             Command.Parameters.AddWithValue("@UserID", userID);
 
-            NpgsqlParameter outParam = new NpgsqlParameter("@Deleted", NpgsqlTypes.NpgsqlDbType.Boolean)
-            {
-                Direction = System.Data.ParameterDirection.Output
-            };
-            Command.Parameters.Add(outParam);
+
 
             try
             {
                 Connection.Open();
-                Command.ExecuteNonQuery();
+                object? result = Command.ExecuteScalar();
 
-                isDeleted = outParam.Value is bool deleted && deleted;
+                isDeleted = result is bool deleted && deleted;
             }
             catch
             {
@@ -171,7 +162,7 @@ namespace Data_Access_Layer
             try
             {
                 Connection.Open();
-                var reader = Command.ExecuteReader();
+                NpgsqlDataReader reader = Command.ExecuteReader();
 
                 while (reader.Read())
                 {
@@ -185,7 +176,7 @@ namespace Data_Access_Layer
 
                     clsPerson Person = new clsPerson
                     {
-                        PersonID = User.PersonID,
+                        PersonID = (int)reader["PersonID"],
                         FirstName = reader.GetString(reader.GetOrdinal("FirstName")),
                         LastName = reader.GetString(reader.GetOrdinal("LastName")),
                         Age = reader.GetInt32(reader.GetOrdinal("Age")),

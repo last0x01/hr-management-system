@@ -99,7 +99,7 @@ namespace Back_End.Data_Access_Layer
                    new NpgsqlConnection(clsDataAccessSettings.ConnectionString))
             {
                 NpgsqlCommand Command = new NpgsqlCommand(
-                    "CALL update_attendance(@AttendanceID, @EmployeeID, @CheckIn, @CheckOut, @Date, @CreatedBy, @Status, @Updated)",
+                    "CALL update_attendance(@AttendanceID, @EmployeeID, @CheckIn, @CheckOut, @Date, @CreatedBy, @Status)",
                     Connection);
 
                 Command.Parameters.AddWithValue("@AttendanceID", Attendance.AttendanceID);
@@ -110,18 +110,13 @@ namespace Back_End.Data_Access_Layer
                 Command.Parameters.AddWithValue("@CreatedBy", Attendance.CreatedByUserID);
                 Command.Parameters.AddWithValue("@Status", (object?)Attendance.Status ?? DBNull.Value);
 
-                NpgsqlParameter OutParameter = new NpgsqlParameter("@Updated", NpgsqlTypes.NpgsqlDbType.Boolean)
-                {
-                    Direction = System.Data.ParameterDirection.Output
-                };
-                Command.Parameters.Add(OutParameter);
 
                 try
                 {
                     Connection.Open();
-                    Command.ExecuteNonQuery();
+                    object? result = Command.ExecuteScalar();
 
-                    IsUpdated = OutParameter.Value is bool Updated && Updated;
+                    IsUpdated = result is bool Updated && Updated;
                 }
                 catch
                 {
