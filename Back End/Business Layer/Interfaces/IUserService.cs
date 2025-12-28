@@ -11,5 +11,8 @@ namespace Business_Layer.Interfaces
         bool UpdateUser(clsUser User);
         bool DeleteUser(int UserId);
 
+        clsUser? GetUserByUsernameAndPassword(string Username, string Passwrod);
+
+
     }
 }

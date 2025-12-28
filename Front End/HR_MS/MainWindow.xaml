@@ -96,7 +96,8 @@
 
                         </StackPanel>
 
-                        <ToggleButton Style="{StaticResource menuButton}" VerticalAlignment="Bottom" 
+                        <ToggleButton Command="{Binding LogoutCommand}"
+                            Style="{StaticResource menuButton}" VerticalAlignment="Bottom" 
                                     DockPanel.Dock="Bottom" Margin="15 0 15 20">
                             <StackPanel Orientation="Horizontal">
                                 <icon:PackIconMaterial Kind="Logout" Style="{StaticResource menuButtonIcon}"/>

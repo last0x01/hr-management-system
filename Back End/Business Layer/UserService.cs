@@ -8,6 +8,11 @@ namespace Business_Layer
     public class UserService : IUserService
     {
 
+        public clsUser? GetUserByUsernameAndPassword(string Username, string Password)
+        {
+
+            return clsUserData.GetUserByUsernameAndPassword(Username, Password);
+        }
 
 
         public clsUser? GetUserByID(int UserID)

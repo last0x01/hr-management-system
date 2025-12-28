@@ -8,7 +8,7 @@
 
         public string LastName { get; set; } = string.Empty;
 
-        public int Age { get; set; }
+        public int? Age { get; set; } // null for removing 0 for UI
 
         public string? Phone { get; set; }
 

@@ -11,7 +11,17 @@ namespace HR_MS
         {
             InitializeComponent();
 
-            DataContext = new MainWindowViewModel();
+            Loaded += MainWindow_Loaded;
+        }
+
+        private void MainWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+
+
+            if (DataContext is MainWindowViewModel Vm)
+            {
+                Vm.RequestLogout += () => this.Close();
+            }
         }
     }
 }

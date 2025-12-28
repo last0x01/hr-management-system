@@ -72,7 +72,7 @@ namespace Data_Access_Layer
 
                 Command.Parameters.AddWithValue("@FirstName", Employee.Person.FirstName);
                 Command.Parameters.AddWithValue("@LastName", Employee.Person.LastName);
-                Command.Parameters.AddWithValue("@Age", Employee.Person.Age);
+                Command.Parameters.AddWithValue("@Age", Employee.Person.Age!);
                 Command.Parameters.AddWithValue("@Gender", Employee.Person.Gender);
 
                 Command.Parameters.AddWithValue("@Address", Employee.Person.Address ?? (object)DBNull.Value);
@@ -81,7 +81,7 @@ namespace Data_Access_Layer
 
                 //Employee Columns
 
-                Command.Parameters.AddWithValue("@Salary", Employee.Salary);
+                Command.Parameters.AddWithValue("@Salary", Employee.Salary!);
                 Command.Parameters.AddWithValue("@DepartmentID", Employee.DepartmentID ?? (object)DBNull.Value);
                 Command.Parameters.AddWithValue("@job_position", Employee.JobPosition);
 
@@ -119,7 +119,7 @@ namespace Data_Access_Layer
 
                 Command.Parameters.AddWithValue("@FirstName", Employee.Person.FirstName);
                 Command.Parameters.AddWithValue("@LastName", Employee.Person.LastName);
-                Command.Parameters.AddWithValue("@Age", Employee.Person.Age);
+                Command.Parameters.AddWithValue("@Age", Employee.Person.Age!);
                 Command.Parameters.AddWithValue("@Gender", Employee.Person.Gender);
 
                 Command.Parameters.AddWithValue("@Address", Employee.Person.Address ?? (object)DBNull.Value);
@@ -127,7 +127,7 @@ namespace Data_Access_Layer
                 Command.Parameters.AddWithValue("@Email", Employee.Person.Email ?? (object)DBNull.Value);
 
                 Command.Parameters.AddWithValue("@PersonID", Employee.PersonID);
-                Command.Parameters.AddWithValue("@Salary", Employee.Salary);
+                Command.Parameters.AddWithValue("@Salary", Employee.Salary!);
                 Command.Parameters.AddWithValue("@DepartmentID", Employee.DepartmentID ?? (object)DBNull.Value);
                 Command.Parameters.AddWithValue("@job_position", Employee.JobPosition);
 

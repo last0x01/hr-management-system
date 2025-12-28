@@ -23,6 +23,9 @@
     <Compile Update="MVVM\Views\Home\HomeView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="MVVM\Views\Logins\LoginView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="MVVM\Views\MessageDialogView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>

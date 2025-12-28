@@ -7,7 +7,7 @@
 
         //Deprtment Allows Null if the employee is CEO
         public int? DepartmentID { get; set; }
-        public decimal Salary { get; set; }
+        public decimal? Salary { get; set; } // Allow null for removing 0 to better UI 
         public string JobPosition { get; set; } = string.Empty;
         public clsPerson Person { get; set; } = new clsPerson();
 
