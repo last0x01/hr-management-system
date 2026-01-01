@@ -2,7 +2,76 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:icon="http://metro.mahapps.com/winfx/xaml/iconpacks"
                     xmlns:sys="clr-namespace:System;assembly=mscorlib">
-    
+
+   
+    <Style x:Key="MainMenuButton" TargetType="RadioButton">
+
+        <!-- Basic properties -->
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Foreground" Value="#d0c0ff"/>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        <Setter Property="Height" Value="35"/>
+        <Setter Property="Margin" Value="15 3"/>
+        <Setter Property="FontSize" Value="13"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="GroupName" Value="MenuGroup"/>
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="RadioButton">
+
+                    <Border x:Name="MainBorder"
+                        Background="{TemplateBinding Background}"
+                        CornerRadius="7">
+
+                        <Grid>
+                           
+                            <Border x:Name="Indicator"
+                                Width="4"
+                                Background="White"
+                                HorizontalAlignment="Left"
+                                Visibility="Collapsed"
+                                CornerRadius="2"/>
+
+                            <ContentPresenter
+                            Margin="10 0 0 0"
+                            VerticalAlignment="Center"/>
+                        </Grid>
+
+                    </Border>
+
+                    <ControlTemplate.Triggers>
+
+                        <!-- Hover -->
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="MainBorder"
+                                Property="Background"
+                                Value="#3E434A"/>
+                            <Setter TargetName="Indicator"
+                                Property="Visibility"
+                                Value="Visible"/>
+                        </Trigger>
+
+                        <!-- Checked (Current View) -->
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter TargetName="MainBorder"
+                                Property="Background"
+                                Value="#212529"/>
+                            <Setter TargetName="Indicator"
+                                Property="Visibility"
+                                Value="Visible"/>
+                        </Trigger>
+
+                    </ControlTemplate.Triggers>
+
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+
+    </Style>
+
+
+  
 
     <!-- Top Button (Close / Minimize / Menu) -->
     <Style x:Key="topButton" TargetType="Button">
@@ -32,47 +101,11 @@
     </Style>
 
     <!-- Menu Button (Sidebar buttons) -->
-    <Style x:Key="menuButton" TargetType="ToggleButton">
-        <!-- Default state -->
-        <Setter Property="Background" Value="Transparent"/>
-        <Setter Property="Foreground" Value="#d0c0ff"/>
-        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
-        <Setter Property="Height" Value="35"/>
-        <Setter Property="Margin" Value="15 3"/>
-        <Setter Property="FontSize" Value="13"/>
-        <Setter Property="Cursor" Value="Hand"/>
-
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="ToggleButton">
-                    <Border Background="{TemplateBinding Background}"
-                        CornerRadius="7">
-                        <ContentPresenter
-                        HorizontalAlignment="Left"
-                        VerticalAlignment="Center"/>
-                    </Border>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-
-        <Style.Triggers>
+ 
 
 
-
-            <!-- Selected -->
-            <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="Black"/>
-                <Setter Property="Foreground" Value="White"/>
-            </Trigger>
-
-        </Style.Triggers>
-    </Style>
-
-
-
-
-    <!-- Paging / Refresh / Add buttons / Save / Cancel-->
-    <Style x:Key="pagingButton" TargetType="Button">
+    <!-- Refresh / Add buttons / Save / Cancel-->
+    <Style x:Key="PrimaryButton" TargetType="Button">
         <Setter Property="Background" Value="#394867"/>
         <Setter Property="Foreground" Value="#F1F6F9"/>
         <Setter Property="FontWeight" Value="SemiBold"/>

@@ -1,5 +1,6 @@
-﻿using Business_Layer;
-using Business_Layer.Interfaces;
+﻿using Business_Layer.Interfaces;
+using Business_Layer.Interfaces.Services;
+using Business_Layer.Services;
 using HR_MS.MVVM.Commands;
 using HR_MS.MVVM.Models;
 using HR_MS.Services;
@@ -18,6 +19,20 @@ namespace HR_MS.MVVM.ViewModels.Departments
         private enum enMode { Add = 1, Update = 2 }
 
         private enMode _Mode = enMode.Add;
+
+        private string _Title;
+
+        public string Title
+        {
+            get => _Title;
+            set
+            {
+                _Title = value;
+                OnPropertyChanged();
+            }
+        }
+
+
 
         public event Action? RequestClose;
 
@@ -41,6 +56,8 @@ namespace HR_MS.MVVM.ViewModels.Departments
 
             SaveCommand = new RelayCommand(o => _Save());
             CloseCommand = new RelayCommand(o => _Close());
+
+            _Title = "Add Department";
             _Mode = enMode.Add;
         }
         public AddEditDepartmentViewModel(clsDepartmentUiModel Department)
@@ -52,12 +69,20 @@ namespace HR_MS.MVVM.ViewModels.Departments
 
             SaveCommand = new RelayCommand(o => _Save());
             CloseCommand = new RelayCommand(o => _Close());
+
+
+            _Title = "Update Department";
             _Mode = enMode.Update;
         }
 
 
         private void _Save()
         {
+            if (!_IsValidDepartmentName())
+            {
+                return;
+            }
+
             switch (_Mode)
             {
                 case enMode.Add:
@@ -69,6 +94,18 @@ namespace HR_MS.MVVM.ViewModels.Departments
 
             }
         }
+
+        private bool _IsValidDepartmentName()
+        {
+            if (Department == null || string.IsNullOrWhiteSpace(Department.DepartmentName))
+            {
+                _DialogService.ShowMessage("Department name is required.", enMessageType.Warning);
+                return false;
+            }
+
+            return true;
+        }
+
 
         private void _UpdateDepartment()
         {
@@ -84,6 +121,9 @@ namespace HR_MS.MVVM.ViewModels.Departments
             if (_DepartmentService.AddDepartment(Department.ToDepartment()))
             {
                 _DialogService.ShowMessage("Department added successfully", enMessageType.Success);
+                _Mode = enMode.Update;
+
+                _Title = "Update Department";
             }
             else
                 _DialogService.ShowMessage("Failed to add", enMessageType.Error);

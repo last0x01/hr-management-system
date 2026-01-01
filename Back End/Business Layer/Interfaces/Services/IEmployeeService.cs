@@ -1,6 +1,6 @@
 ﻿using Back_End.Models;
 
-namespace Business_Layer.Interfaces
+namespace Business_Layer.Interfaces.Services
 {
     public interface IEmployeeService
     {
@@ -10,6 +10,7 @@ namespace Business_Layer.Interfaces
         bool AddEmployee(clsEmployee Employee);
         bool UpdateEmployee(clsEmployee Employee);
         bool DeleteEmployee(int EmployeeId);
+        int GetEmployeeCount();
 
 
     }

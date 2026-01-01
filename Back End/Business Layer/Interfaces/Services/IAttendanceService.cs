@@ -1,4 +1,5 @@
 ﻿using Back_End.Models;
+using Business_Layer.Validations;
 
 namespace Business_Layer.Interfaces
 {
@@ -10,6 +11,16 @@ namespace Business_Layer.Interfaces
         bool AddAttendance(clsAttendance Attendance);
         bool UpdateAttendance(clsAttendance Attendance);
         bool DeleteAttendance(int AttendanceId);
+
+        int GetTodayPresentCount();
+
+        bool IsEmployeePresentToday(int EmployeeID);
+
+        int GetTodayLateCount(TimeOnly LateTime);
+
+        AttendanceValidationResult CanAddAttendance(int EmployeeID);
+
+        List<clsAttendance> GetTodayAttendances();
 
     }
 }

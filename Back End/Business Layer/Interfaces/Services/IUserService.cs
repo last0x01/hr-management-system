@@ -1,6 +1,6 @@
 ﻿using Back_End.Models;
 
-namespace Business_Layer.Interfaces
+namespace Business_Layer.Interfaces.Services
 {
     public interface IUserService
     {
@@ -10,6 +10,9 @@ namespace Business_Layer.Interfaces
         bool AddUser(clsUser User);
         bool UpdateUser(clsUser User);
         bool DeleteUser(int UserId);
+
+        clsUser? GetUserByUsernameAndPassword(string Username, string Passwrod);
+
 
     }
 }

@@ -10,9 +10,7 @@
              
              d:DesignHeight="450" d:DesignWidth="800">
 
-    <UserControl.DataContext>
-        <vm:AttendancesViewModel/>
-        </UserControl.DataContext>
+    
 
             <StackPanel>
         <TextBlock Text="Attendances" Foreground="#537188"  FontSize="30" FontWeight="Bold"
@@ -20,24 +18,33 @@
 
         <Grid Margin="0,0,0,15">
             <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition/>
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
 
-            <!-- Add New Attendance (Right aligned) -->
-            <Button Grid.Column="1"
-            Style="{StaticResource pagingButton}">
+            <!-- Export Today (Left aligned) -->
+            <Button Grid.Column="0" Command="{Binding ExportTodayCommand}" Style="{StaticResource PrimaryButton}">
                 <StackPanel Orientation="Horizontal">
-                    <icon:PackIconMaterial Kind="Plus"
-                                   Style="{StaticResource menuButtonIcon}"
-                                   Margin="0,5"/>
-                    <TextBlock Text=" Add Attendance"
-                       VerticalAlignment="Center"/>
+                    <icon:PackIconMaterial Kind="FileExport" Style="{StaticResource menuButtonIcon}" Margin="0,5"/>
+                    <TextBlock Text=" Export Today" VerticalAlignment="Center"/>
+                </StackPanel>
+            </Button>
+
+            <!-- Spacer in middle -->
+            <StackPanel Grid.Column="1"/>
+
+            <!-- Add New Attendance (Right aligned) -->
+            <Button Grid.Column="2" Command="{Binding AddAttendanceCommand}" Style="{StaticResource PrimaryButton}">
+                <StackPanel Orientation="Horizontal">
+                    <icon:PackIconMaterial Kind="Plus" Style="{StaticResource menuButtonIcon}" Margin="0,5"/>
+                    <TextBlock Text=" Add Attendance" VerticalAlignment="Center"/>
                 </StackPanel>
             </Button>
         </Grid>
 
-        <DataGrid Style="{DynamicResource DataGridStyle1}"
+
+        <DataGrid SelectedItem="{Binding SelectedAttendance}"  Style="{DynamicResource DataGridStyle1}"
           CellStyle="{DynamicResource DataGridCellStyle1}"
           RowStyle="{DynamicResource DataGridRowStyle1}"
           IsReadOnly="True"
@@ -52,6 +59,9 @@
 
                 <DataGridTextColumn Header="Employee ID"
                             Binding="{Binding EmployeeID}" />
+                
+                <DataGridTextColumn Header="Employee Name"
+                            Binding="{Binding EmployeeName}" />
 
                 <DataGridTextColumn Header="Date"
                             Binding="{Binding AttendanceDate, StringFormat=d}" />
@@ -63,10 +73,9 @@
                             Binding="{Binding CheckOut}" />
 
                 <DataGridTextColumn Header="Total Hours"
-                            Binding="{Binding TotalHours}" />
+                            Binding="{Binding TotalHoursFormateed}" />
+          
 
-                <DataGridTextColumn Header="Status"
-                            Binding="{Binding Status}" />
 
                 <!-- Actions -->
                 <DataGridTemplateColumn Width="120">

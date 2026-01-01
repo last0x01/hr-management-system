@@ -11,7 +11,7 @@ namespace HR_MS.MVVM.Models
 
         //Deprtment Allows Null if the employee is CEO
         private int? _DepartmentID;
-        private decimal _Salary; //Allow Null For Good UI for Removing 0 
+        private decimal? _Salary; //Allow Null For Good UI for Removing 0 
         private string _JobPosition;
         private string? _DepartmentName; // جديد
 
@@ -20,7 +20,7 @@ namespace HR_MS.MVVM.Models
             _EmployeeID = -1;
             _PersonID = -1;
             _DepartmentID = null;
-            _Salary = default;
+            _Salary = null;
             _JobPosition = "";
             _Person = new clsPersonUiModel();
         }
@@ -93,7 +93,7 @@ namespace HR_MS.MVVM.Models
             set { _DepartmentID = value; OnPropertyChanged(); }
         }
 
-        public decimal Salary
+        public decimal? Salary
         {
             get => _Salary;
             set { _Salary = value; OnPropertyChanged(); }

@@ -11,7 +11,7 @@ namespace HR_MS.MVVM.Models
         private int _ID;
         private string _FirstName;
         private string _LastName;
-        private int _Age;
+        private int? _Age;
         private string? _Phone;
         private string? _Email;
         private string _Gender;
@@ -22,7 +22,7 @@ namespace HR_MS.MVVM.Models
             _ID = -1;
             _FirstName = "";
             _LastName = "";
-            _Age = default;
+            _Age = null;
             _Phone = null;
             _Email = null;
             _Gender = "";
@@ -63,7 +63,7 @@ namespace HR_MS.MVVM.Models
             set { _LastName = value; OnPropertyChanged();/* For updating LastName in FullName */ OnPropertyChanged(nameof(FullName)); }
         }
 
-        public int Age
+        public int? Age
         {
             get => _Age;
             set { _Age = value; OnPropertyChanged(); }

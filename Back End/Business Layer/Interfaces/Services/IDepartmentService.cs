@@ -1,6 +1,6 @@
 ﻿using Back_End.Models;
 
-namespace Business_Layer.Interfaces
+namespace Business_Layer.Interfaces.Services
 {
     public interface IDepartmentService
     {

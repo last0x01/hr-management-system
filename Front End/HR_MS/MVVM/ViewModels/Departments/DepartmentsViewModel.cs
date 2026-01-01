@@ -1,6 +1,7 @@
 ﻿using Back_End.Models;
-using Business_Layer;
 using Business_Layer.Interfaces;
+using Business_Layer.Interfaces.Services;
+using Business_Layer.Services;
 using HR_MS.MVVM.Commands;
 using HR_MS.MVVM.Models;
 using HR_MS.MVVM.Views.Departments;
@@ -96,5 +97,11 @@ namespace HR_MS.MVVM.ViewModels.Departments
             }
 
         }
+
+        public void OnNavigatedTo()
+        {
+            SelectedDepartment = null;
+        }
+
     }
 }

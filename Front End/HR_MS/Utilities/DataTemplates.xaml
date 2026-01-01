@@ -1,0 +1,44 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:vmHome="clr-namespace:HR_MS.MVVM.ViewModels.Home"
+                    xmlns:vmEmployees="clr-namespace:Front_End.HR_MS.MVVM.ViewModels.Employees"
+                    xmlns:vmUsers="clr-namespace:HR_MS.MVVM.ViewModels.Users"
+                    xmlns:vmDepartments="clr-namespace:HR_MS.MVVM.ViewModels.Departments"
+                    xmlns:vmAttendances="clr-namespace:HR_MS.MVVM.ViewModels.Attendances"
+                    xmlns:vmAbsences="clr-namespace:HR_MS.MVVM.ViewModels.Absences"
+
+                    xmlns:vwHome="clr-namespace:HR_MS.MVVM.Views.Home"
+                    xmlns:vwEmployees="clr-namespace:HR_MS.MVVM.Views.Employees"
+                    xmlns:vwUsers="clr-namespace:HR_MS.MVVM.Views.Users"
+                    xmlns:vwDepartments="clr-namespace:HR_MS.MVVM.Views.Departments"
+                    xmlns:vwAttendances="clr-namespace:HR_MS.MVVM.Views.Attendances"
+                    xmlns:vwAbsences="clr-namespace:HR_MS.MVVM.Views.Absences" 
+                    >
+
+
+
+    <DataTemplate DataType="{x:Type vmHome:HomeViewModel}">
+        <vwHome:HomeView />
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type vmEmployees:EmployeesViewModel}">
+        <vwEmployees:EmployeesView />
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type vmUsers:UsersViewModel}">
+        <vwUsers:UsersView />
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type vmDepartments:DepartmentsViewModel}">
+        <vwDepartments:DepartmentsView />
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type vmAttendances:AttendancesViewModel}">
+        <vwAttendances:AttendancesView />
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type vmAbsences:AbsencesViewModel}">
+        <vwAbsences:AbsencesView />
+    </DataTemplate>
+
+</ResourceDictionary>

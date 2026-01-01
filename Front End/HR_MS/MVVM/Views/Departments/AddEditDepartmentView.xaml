@@ -6,9 +6,10 @@
         xmlns:icon="http://metro.mahapps.com/winfx/xaml/iconpacks"
         mc:Ignorable="d"
         Title="Add / Edit Department"
-        Height="400"
-        Width="400"
-        WindowStartupLocation="CenterScreen">
+        Height="440"
+        Width="420"
+        WindowStartupLocation="CenterScreen"
+        Background="#EFF2F7">
 
     <Grid Margin="20">
         <Grid.RowDefinitions>
@@ -17,45 +18,67 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <!-- Title -->
-        <TextBlock Text="Department Information"
-                   FontSize="22"
-                   FontWeight="Bold"
-                   HorizontalAlignment="Center"
-                   Margin="0,0,0,20"/>
-
-        <!-- Content -->
-        <StackPanel Grid.Row="1">
-
-            <TextBlock Text="Department Name"
-                       Style="{StaticResource FieldLabel}"/>
-
-            <TextBox Style="{StaticResource RoundedTextBox}"
-                     Text="{Binding Department.DepartmentName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-
-            <TextBlock Text="Description"
-                       Style="{StaticResource FieldLabel}"
-                       Margin="0,10,0,0"/>
-
-            <TextBox Style="{StaticResource RoundedTextBox}"
-                     Text="{Binding Department.Description, Mode=TwoWay}"
-                     Height="100"
-                     AcceptsReturn="True"/>
-
-            <CheckBox Content="Active Department"
-                      Margin="0,15,0,0"
-                      IsChecked="{Binding Department.IsActive, Mode=TwoWay}"/>
-
+        <!-- ===== Header ===== -->
+        <StackPanel Orientation="Horizontal"
+                    HorizontalAlignment="Center"
+                    Margin="0,0,0,20">
+            <icon:PackIconMaterial Kind="OfficeBuilding"
+                                   Width="26"
+                                   Height="26"
+                                   Foreground="#394867"/>
+            <TextBlock Text="{Binding Title}"
+                       FontSize="20"
+                       FontWeight="Bold"
+                       Foreground="#394867"
+                       Margin="10,0,0,0"/>
         </StackPanel>
 
-        <!-- Buttons -->
+        <!-- ===== Card Content ===== -->
+        <Border Grid.Row="1"
+                Background="White"
+                CornerRadius="12"
+                Padding="25">
+
+          
+                <StackPanel>
+
+                <!-- Department Name -->
+                <TextBlock Text="Department Name"
+                           Style="{StaticResource FieldLabel}"/>
+
+                <TextBox Style="{StaticResource RoundedTextBox}"
+                         Text="{Binding Department.DepartmentName,
+                                        Mode=TwoWay,
+                                        UpdateSourceTrigger=PropertyChanged}"/>
+
+                <!-- Description -->
+                <TextBlock Text="Description"
+                           Style="{StaticResource FieldLabel}"
+                           Margin="0,15,0,0"/>
+
+                <TextBox Style="{StaticResource RoundedTextBox}"
+                         Text="{Binding Department.Description, Mode=TwoWay}"
+                         Height="90"
+                         AcceptsReturn="True"
+                         VerticalScrollBarVisibility="Auto"/>
+
+                <!-- Active -->
+                <CheckBox Content="Active Department"
+                          Margin="0,15,0,0"
+                          FontWeight="SemiBold"
+                          IsChecked="{Binding Department.IsActive, Mode=TwoWay}"/>
+
+            </StackPanel>
+              
+        </Border>
+
+        <!-- ===== Buttons ===== -->
         <StackPanel Grid.Row="2"
                     Orientation="Horizontal"
                     HorizontalAlignment="Right"
                     Margin="0,20,0,0">
 
-            <!-- Save Button -->
-            <Button Style="{StaticResource pagingButton}"
+            <Button Style="{StaticResource PrimaryButton}"
                     Width="100"
                     Margin="0,0,10,0"
                     Command="{Binding SaveCommand}">
@@ -68,8 +91,7 @@
                 </StackPanel>
             </Button>
 
-            <!-- Cancel Button -->
-            <Button Style="{StaticResource pagingButton}"
+            <Button Style="{StaticResource PrimaryButton}"
                     Width="100"
                     IsCancel="True"
                     Command="{Binding CloseCommand}">
