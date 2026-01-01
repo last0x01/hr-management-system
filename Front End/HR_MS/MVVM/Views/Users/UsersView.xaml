@@ -10,9 +10,6 @@
              xmlns:icon="http://metro.mahapps.com/winfx/xaml/iconpacks"
              d:DesignHeight="450" d:DesignWidth="800">
 
-    <UserControl.DataContext>
-        <vm:UsersViewModel/>
-    </UserControl.DataContext>
     
     <StackPanel>
         <TextBlock Text="Users" Foreground="#537188"  FontSize="30" FontWeight="Bold"
@@ -26,7 +23,7 @@
 
             <!-- Add New User (Right aligned) -->
             <Button Command="{Binding AddUserCommand}" Grid.Column="1"
-            Style="{StaticResource pagingButton}">
+            Style="{StaticResource PrimaryButton}">
                 <StackPanel Orientation="Horizontal">
                     <icon:PackIconMaterial Kind="Plus"
                                    Style="{StaticResource menuButtonIcon}"

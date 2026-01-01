@@ -1,6 +1,7 @@
 ﻿using Back_End.Models;
-using Business_Layer;
 using Business_Layer.Interfaces;
+using Business_Layer.Interfaces.Services;
+using Business_Layer.Services;
 using HR_MS.MVVM.Commands;
 using HR_MS.MVVM.Models;
 using HR_MS.MVVM.Views.Attendances;
@@ -8,6 +9,7 @@ using HR_MS.Services;
 using HR_MS.Utilities;
 using HR_MS.Utilities.Enums;
 using System.Collections.ObjectModel;
+using System.Windows.Input;
 
 namespace HR_MS.MVVM.ViewModels.Attendances
 {
@@ -30,22 +32,37 @@ namespace HR_MS.MVVM.ViewModels.Attendances
             }
         }
 
-        public RelayCommand RefreshAttendancesCommand { get; }
-        public RelayCommand AddAttendanceCommand { get; }
-        public RelayCommand EditAttendanceCommand { get; }
-        public RelayCommand DeleteAttendanceCommand { get; }
+        private readonly IEmployeeService _EmployeeService;
+
+
+
+        public ICommand RefreshAttendancesCommand { get; }
+        public ICommand AddAttendanceCommand { get; }
+        public ICommand EditAttendanceCommand { get; }
+        public ICommand DeleteAttendanceCommand { get; }
+
+        public ICommand ExportTodayCommand { get; }
 
         public AttendancesViewModel()
         {
             _DialogService = new DialogService();
             _AttendanceService = new AttendanceService();
+            _EmployeeService = new EmployeeService();
 
             RefreshAttendancesCommand = new RelayCommand(o => _LoadAttendances());
             AddAttendanceCommand = new RelayCommand(o => _AddAttendance());
             EditAttendanceCommand = new RelayCommand(o => _UpdateAttendance());
             DeleteAttendanceCommand = new RelayCommand(o => _DeleteAttendance());
+            ExportTodayCommand = new RelayCommand(o => _ExportToday());
 
             _LoadAttendances();
+        }
+
+        private void _ExportToday()
+        {
+
+            _DialogService.ShowMessage("Not implemented yet.", enMessageType.Info);
+
         }
 
         private void _AddAttendance()
@@ -96,15 +113,32 @@ namespace HR_MS.MVVM.ViewModels.Attendances
 
         private void _LoadAttendances()
         {
+            //This is Temp Function Because it is very slow
             Attendances.Clear();
 
-            List<Back_End.Models.clsAttendance> list =
-                _AttendanceService.GetAllAttendances();
+            List<clsEmployee> EmpList = _EmployeeService.GetAllEmployees();
 
-            foreach (clsAttendance attendance in list)
+            List<Back_End.Models.clsAttendance> AttList = _AttendanceService.GetAllAttendances();
+
+            var query = from A in AttList
+                        join E in EmpList
+                        on A.EmployeeID equals E.EmployeeID into AttGroup
+                        from E in AttGroup.DefaultIfEmpty()
+                        select new clsAttendanceUiModel(A)
+                        {
+                            EmployeeName = (E != null) ? $"{E.Person.FirstName} {E.Person.LastName}" : ""
+                        };
+
+            foreach (var attendance in query)
             {
-                Attendances.Add(new clsAttendanceUiModel(attendance));
+                Attendances.Add(attendance);
             }
         }
+
+        public void OnNavigatedTo()
+        {
+            SelectedAttendance = null;
+        }
+
     }
 }

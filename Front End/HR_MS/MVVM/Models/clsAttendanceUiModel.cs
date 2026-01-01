@@ -13,21 +13,22 @@ namespace HR_MS.MVVM.Models
 
         private int _AttendanceID;
         private int _EmployeeID;
+        private string? _EmployeeName;
         private DateTime _AttendanceDate;
-        private TimeSpan? _CheckIn;
-        private TimeSpan? _CheckOut;
+        private TimeOnly? _CheckIn;
+        private TimeOnly? _CheckOut;
         private int _CreatedByUserID;
-        private string? _Status;
 
         public clsAttendanceUiModel()
         {
             _AttendanceID = -1;
             _EmployeeID = -1;
+            _EmployeeName = null;
             _AttendanceDate = DateTime.Now;
             _CheckIn = null;
             _CheckOut = null;
             _CreatedByUserID = -1;
-            _Status = null;
+
         }
 
         public clsAttendanceUiModel(clsAttendance attendance)
@@ -38,7 +39,7 @@ namespace HR_MS.MVVM.Models
             _CheckIn = attendance.CheckIn;
             _CheckOut = attendance.CheckOut;
             _CreatedByUserID = attendance.CreatedByUserID;
-            _Status = attendance.Status;
+
         }
 
         public clsAttendance ToAttendance()
@@ -51,7 +52,7 @@ namespace HR_MS.MVVM.Models
                 CheckIn = this.CheckIn,
                 CheckOut = this.CheckOut,
                 CreatedByUserID = this.CreatedByUserID,
-                Status = this.Status
+
             };
         }
 
@@ -67,19 +68,25 @@ namespace HR_MS.MVVM.Models
             set { _EmployeeID = value; OnPropertyChanged(); }
         }
 
+        public string? EmployeeName
+        {
+            get => _EmployeeName;
+            set { _EmployeeName = value; OnPropertyChanged(); }
+        }
+
         public DateTime AttendanceDate
         {
             get => _AttendanceDate;
             set { _AttendanceDate = value; OnPropertyChanged(); }
         }
 
-        public TimeSpan? CheckIn
+        public TimeOnly? CheckIn
         {
             get => _CheckIn;
             set { _CheckIn = value; OnPropertyChanged(); }
         }
 
-        public TimeSpan? CheckOut
+        public TimeOnly? CheckOut
         {
             get => _CheckOut;
             set { _CheckOut = value; OnPropertyChanged(); }
@@ -91,13 +98,14 @@ namespace HR_MS.MVVM.Models
             set { _CreatedByUserID = value; OnPropertyChanged(); }
         }
 
-        public string? Status
-        {
-            get => _Status;
-            set { _Status = value; OnPropertyChanged(); }
-        }
 
         public TimeSpan? TotalHours => CheckIn != null && CheckOut != null ? CheckOut - CheckIn : null;
+
+
+
+        public string? TotalHoursFormateed => TotalHours.HasValue ?
+            $"{(int)TotalHours.Value.TotalHours:D2}:{TotalHours.Value.Minutes:D2}" : "--:--";
+
 
         public bool HasCheckedIn => CheckIn != null;
         public bool HasCheckedOut => CheckOut != null;

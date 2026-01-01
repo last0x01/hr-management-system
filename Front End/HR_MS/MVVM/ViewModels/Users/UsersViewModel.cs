@@ -1,6 +1,7 @@
 ﻿using Back_End.Models;
-using Business_Layer;
 using Business_Layer.Interfaces;
+using Business_Layer.Interfaces.Services;
+using Business_Layer.Services;
 using HR_MS.MVVM.Commands;
 using HR_MS.MVVM.Models;
 using HR_MS.MVVM.Views.Users;
@@ -102,5 +103,11 @@ namespace HR_MS.MVVM.ViewModels.Users
             }
 
         }
+
+        public void OnNavigatedTo()
+        {
+            SelectedUser = null;
+        }
+
     }
 }

@@ -23,7 +23,13 @@ namespace HR_MS.MVVM.Views.Logins
         {
             if (DataContext is LoginViewModel vm)
             {
-                vm.RequestLogIn += () => this.Close();
+                vm.RequestLogIn += () =>
+                {
+
+                    new MainWindow().Show();
+
+                    this.Close();
+                };
             }
         }
     }

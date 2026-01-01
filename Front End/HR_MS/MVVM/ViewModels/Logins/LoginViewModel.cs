@@ -1,6 +1,8 @@
 ﻿using Back_End.Models;
 using Business_Layer;
 using Business_Layer.Interfaces;
+using Business_Layer.Interfaces.Services;
+using Business_Layer.Services;
 using HR_MS.MVVM.Commands;
 using HR_MS.Services;
 using HR_MS.Utilities;
@@ -53,6 +55,9 @@ namespace HR_MS.MVVM.ViewModels.Logins
 
         private async Task _Login(object Parameter)
         {
+
+
+
             if (Parameter is not PasswordBox passBox)
                 return;
             string Password = passBox.Password;
@@ -69,11 +74,13 @@ namespace HR_MS.MVVM.ViewModels.Logins
 
             clsUser? User = await Task.Run(() => _UserService.GetUserByUsernameAndPassword(Username, Password));
 
-            await Task.Delay(1000);
+            await Task.Delay(1500);
 
             if (User == null)
             {
+                IsLoading = false;
                 _DialogService.ShowMessage("Login Failed!", Utilities.Enums.enMessageType.Error);
+
                 return;
             }
 
@@ -81,17 +88,12 @@ namespace HR_MS.MVVM.ViewModels.Logins
 
             IsLoading = false;
 
-            NavigateToMain();
-
-        }
-
-
-        public void NavigateToMain()
-        {
-            MainWindow main = new MainWindow();
-            main.Show();
             RequestLogIn?.Invoke();
+
         }
+
+
+
 
 
 

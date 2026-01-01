@@ -7,11 +7,119 @@ namespace Back_End.Data_Access_Layer
 {
     public class clsAttendanceData
     {
+        public static bool IsEmployeePresentToday(int employeeID)
+        {
+            bool isPresent = false;
+
+            string query = @"
+                            SELECT 1 
+                            FROM Attendances
+                            WHERE EmployeeID = @EmployeeID
+                              AND AttendanceDate = @Today
+                            LIMIT 1;
+            ";
+
+            NpgsqlConnection Connection = new NpgsqlConnection(clsDataAccessSettings.ConnectionString);
+            NpgsqlCommand Command = new NpgsqlCommand(query, Connection);
+
+            Command.Parameters.AddWithValue("@EmployeeID", employeeID);
+            Command.Parameters.AddWithValue("@Today", DateOnly.FromDateTime(DateTime.Today));
+            Command.Parameters["@Today"].NpgsqlDbType = NpgsqlTypes.NpgsqlDbType.Date;
+
+            try
+            {
+                Connection.Open();
+                NpgsqlDataReader reader = Command.ExecuteReader();
+                isPresent = reader.HasRows;
+                reader.Close();
+            }
+            catch
+            {
+
+            }
+            finally
+            {
+                Connection.Close();
+            }
+
+            return isPresent;
+        }
+
+        public static int GetTodayLateCount(TimeOnly lateTime)
+        {
+            int LateCount = 0;
+
+            string query = @"
+                            SELECT COUNT(*) 
+                            FROM Attendances
+                            WHERE AttendanceDate = @Today
+                            AND checkintime > @LateTime
+    ";
+
+            using (NpgsqlConnection Connection = new NpgsqlConnection(clsDataAccessSettings.ConnectionString))
+            using (NpgsqlCommand Command = new NpgsqlCommand(query, Connection))
+            {
+                Command.Parameters.AddWithValue("@Today", DateOnly.FromDateTime(DateTime.Today));
+                Command.Parameters["@Today"].NpgsqlDbType = NpgsqlTypes.NpgsqlDbType.Date;
+
+                Command.Parameters.AddWithValue("@LateTime", lateTime);
+                Command.Parameters["@LateTime"].NpgsqlDbType = NpgsqlTypes.NpgsqlDbType.Time;
+
+                try
+                {
+                    Connection.Open();
+                    object? result = Command.ExecuteScalar();
+
+                    if (result != null && int.TryParse(result.ToString(), out int count))
+                        LateCount = count;
+                }
+                catch
+                {
+
+                }
+            }
+
+            return LateCount;
+        }
+        public static int GetTodayPresentCount()
+        {
+            int PresentCount = 0;
+
+            string query = @"
+                                SELECT COUNT(*) 
+                                FROM Attendances
+                                WHERE AttendanceDate = @Today
+                              AND CheckInTime IS NOT NULL
+    ";
+
+            using (NpgsqlConnection Connection = new NpgsqlConnection(clsDataAccessSettings.ConnectionString))
+            using (NpgsqlCommand Command = new NpgsqlCommand(query, Connection))
+            {
+                Command.Parameters.AddWithValue("@Today", DateOnly.FromDateTime(DateTime.Today));
+                Command.Parameters["@Today"].NpgsqlDbType = NpgsqlTypes.NpgsqlDbType.Date;
+
+                try
+                {
+                    Connection.Open();
+                    object? result = Command.ExecuteScalar();
+
+                    if (result != null && int.TryParse(result.ToString(), out int count))
+                        PresentCount = count;
+                }
+                catch
+                {
+
+                }
+            }
+
+            return PresentCount;
+        }
+
         public static clsAttendance? GetAttendanceByID(int attendanceID)
         {
             const string query =
                 @"SELECT AttendanceID, EmployeeID, AttendanceDate,
-                 CheckIn, CheckOut, CreatedByUserID, Status
+                 CheckIn, CheckOut, CreatedByUserID
           FROM Attendances
           WHERE AttendanceID = @AttendanceID";
 
@@ -37,14 +145,12 @@ namespace Back_End.Data_Access_Layer
                             AttendanceDate = (DateTime)reader["AttendanceDate"],
                             CheckIn = reader["CheckIn"] == DBNull.Value
                                 ? null
-                                : (TimeSpan?)reader["CheckIn"],
+                                : (TimeOnly?)reader["CheckIn"],
                             CheckOut = reader["CheckOut"] == DBNull.Value
                                 ? null
-                                : (TimeSpan?)reader["CheckOut"],
+                                : (TimeOnly?)reader["CheckOut"],
                             CreatedByUserID = (int)reader["CreatedByUserID"],
-                            Status = reader["Status"] == DBNull.Value
-                                ? null
-                                : (string)reader["Status"]
+
                         };
                     }
                 }
@@ -64,15 +170,22 @@ namespace Back_End.Data_Access_Layer
                    new NpgsqlConnection(clsDataAccessSettings.ConnectionString))
             {
                 NpgsqlCommand Command = new NpgsqlCommand(
-                    "SELECT add_attendance(@EmployeeID, @CheckIn, @CheckOut, @Date , @CreatedBy, @Status)",
+                    "SELECT add_attendance(@EmployeeID, @CheckIn, @CheckOut, @Date , @CreatedBy)",
                     Connection);
 
                 Command.Parameters.AddWithValue("@EmployeeID", Attendance.EmployeeID);
+
                 Command.Parameters.AddWithValue("@Date", Attendance.AttendanceDate);
+                Command.Parameters["@Date"].NpgsqlDbType = NpgsqlTypes.NpgsqlDbType.Date;
+
                 Command.Parameters.AddWithValue("@CheckIn", (object?)Attendance.CheckIn ?? DBNull.Value);
+                Command.Parameters["@CheckIn"].NpgsqlDbType = NpgsqlTypes.NpgsqlDbType.Time;
+
                 Command.Parameters.AddWithValue("@CheckOut", (object?)Attendance.CheckOut ?? DBNull.Value);
+                Command.Parameters["@CheckOut"].NpgsqlDbType = NpgsqlTypes.NpgsqlDbType.Time;
+
                 Command.Parameters.AddWithValue("@CreatedBy", Attendance.CreatedByUserID);
-                Command.Parameters.AddWithValue("@Status", (object?)Attendance.Status ?? DBNull.Value);
+
 
                 try
                 {
@@ -93,37 +206,36 @@ namespace Back_End.Data_Access_Layer
 
         public static bool UpdateAttendance(clsAttendance Attendance)
         {
-            bool IsUpdated = false;
+            int RowsAffected = 0;
 
             using (NpgsqlConnection Connection =
                    new NpgsqlConnection(clsDataAccessSettings.ConnectionString))
             {
                 NpgsqlCommand Command = new NpgsqlCommand(
-                    "CALL update_attendance(@AttendanceID, @EmployeeID, @CheckIn, @CheckOut, @Date, @CreatedBy, @Status)",
-                    Connection);
+                    @"UPDATE attendances
+                      SET checkouttime = @CheckOut
+                      WHERE attendanceid = @AttendanceID", Connection);
 
                 Command.Parameters.AddWithValue("@AttendanceID", Attendance.AttendanceID);
-                Command.Parameters.AddWithValue("@EmployeeID", Attendance.EmployeeID);
-                Command.Parameters.AddWithValue("@Date", Attendance.AttendanceDate);
-                Command.Parameters.AddWithValue("@CheckIn", (object?)Attendance.CheckIn ?? DBNull.Value);
+
                 Command.Parameters.AddWithValue("@CheckOut", (object?)Attendance.CheckOut ?? DBNull.Value);
-                Command.Parameters.AddWithValue("@CreatedBy", Attendance.CreatedByUserID);
-                Command.Parameters.AddWithValue("@Status", (object?)Attendance.Status ?? DBNull.Value);
+                Command.Parameters["@CheckOut"].NpgsqlDbType = NpgsqlTypes.NpgsqlDbType.Time;
+
 
 
                 try
                 {
                     Connection.Open();
-                    object? result = Command.ExecuteScalar();
 
-                    IsUpdated = result is bool Updated && Updated;
+
+                    RowsAffected = Command.ExecuteNonQuery();
                 }
                 catch
                 {
                 }
             }
 
-            return IsUpdated;
+            return RowsAffected > 0;
         }
 
 
@@ -184,11 +296,11 @@ namespace Back_End.Data_Access_Layer
                         {
                             AttendanceID = (int)Reader["AttendanceID"],
                             EmployeeID = (int)Reader["EmployeeID"],
-                            AttendanceDate = (DateTime)Reader["AttendanceDate"],
-                            CheckIn = Reader["CheckInTime"] == DBNull.Value ? null : (TimeSpan?)Reader["CheckInTime"],
-                            CheckOut = Reader["CheckOutTime"] == DBNull.Value ? null : (TimeSpan?)Reader["CheckOutTime"],
+                            AttendanceDate = ((DateOnly)Reader["AttendanceDate"]).ToDateTime(TimeOnly.MinValue),
+                            CheckIn = Reader["CheckInTime"] == DBNull.Value ? null : (TimeOnly?)Reader["CheckInTime"],
+                            CheckOut = Reader["CheckOutTime"] == DBNull.Value ? null : (TimeOnly?)Reader["CheckOutTime"],
                             CreatedByUserID = (int)Reader["CreatedByUserID"],
-                            Status = Reader["Status"] == DBNull.Value ? null : (string)Reader["Status"]
+
                         };
 
                         Attendances.Add(Attendance);

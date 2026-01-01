@@ -32,13 +32,15 @@
 
                 </Grid.ColumnDefinitions>
 
-                <StackPanel Grid.Column="0" Margin="0"
-                            VerticalAlignment="Center">
+                <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0, 0, 30">
+                    <StackPanel.LayoutTransform>
+                        <ScaleTransform ScaleX="1.2" ScaleY="1.2" />
+                    </StackPanel.LayoutTransform>
 
 
 
 
-                    <TextBlock  Text="Sign In"  Foreground="Black" Margin="0 60 0 10" HorizontalAlignment="Center" FontSize="20"  FontWeight="Bold"/>
+                        <TextBlock  Text="Sign In"  Foreground="Black" Margin="0 60 0 10" HorizontalAlignment="Center" FontSize="20"  FontWeight="Bold"/>
                     <StackPanel Margin="0 0 0 20" Height="25" Orientation="Horizontal" HorizontalAlignment="Center">
                         <Grid>
                             <Grid.ColumnDefinitions>
@@ -104,7 +106,7 @@
                 </Grid>
 
                 <Border Grid.Column="1" 
-                        CornerRadius="60 0 0 60" 
+                        CornerRadius="30 0 0 30" 
                         Background="#FF381761">
 
                 </Border>

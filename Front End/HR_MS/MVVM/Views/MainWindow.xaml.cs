@@ -1,4 +1,6 @@
-﻿using System.Windows;
+﻿using HR_MS.MVVM.ViewModels;
+using HR_MS.MVVM.Views.Logins;
+using System.Windows;
 
 namespace HR_MS
 {
@@ -12,6 +14,8 @@ namespace HR_MS
             InitializeComponent();
 
             Loaded += MainWindow_Loaded;
+
+
         }
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
@@ -20,7 +24,12 @@ namespace HR_MS
 
             if (DataContext is MainWindowViewModel Vm)
             {
-                Vm.RequestLogout += () => this.Close();
+                Vm.RequestLogout += () =>
+                {
+                    new LoginView().Show();
+                    this.Close();
+
+                };
             }
         }
     }

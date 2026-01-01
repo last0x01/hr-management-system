@@ -9,9 +9,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
 
-    <UserControl.DataContext>
-        <vm:EmployeesViewModel/>
-    </UserControl.DataContext>
+
 
         <StackPanel>
         <TextBlock Text="Employees"  Foreground="#537188" FontSize="30" FontWeight="Bold"
@@ -24,7 +22,7 @@
             </Grid.ColumnDefinitions>
 
             <Button Grid.Column="1" Command="{Binding AddEmployeeCommand}"
-          Style="{StaticResource pagingButton}">
+          Style="{StaticResource PrimaryButton}">
                 <StackPanel Orientation="Horizontal">
                     <icon:PackIconMaterial Kind="Plus"
                                  Style="{StaticResource menuButtonIcon}"

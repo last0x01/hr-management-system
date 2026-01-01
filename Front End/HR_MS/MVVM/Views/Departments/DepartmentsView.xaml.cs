@@ -24,5 +24,10 @@ namespace HR_MS.MVVM.Views.Departments
         {
             InitializeComponent();
         }
+
+        private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
     }
 }

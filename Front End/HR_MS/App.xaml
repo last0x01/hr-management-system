@@ -7,9 +7,8 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
             <ResourceDictionary Source="/Styles/MainStyles.xaml"/>
-        </ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Utilities/DataTemplates.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>
 </Application>
-
-<!--StartupUri="MVVM/Views/Logins/LoginView.xaml">--> 

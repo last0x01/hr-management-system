@@ -9,13 +9,13 @@
         public DateTime AttendanceDate { get; set; } = DateTime.Now;
 
         // Nullable: may not have checked in yet
-        public TimeSpan? CheckIn { get; set; }
+        public TimeOnly? CheckIn { get; set; }
 
         // Nullable: may not have checked out yet
-        public TimeSpan? CheckOut { get; set; }
+        public TimeOnly? CheckOut { get; set; }
 
         public int CreatedByUserID { get; set; } = -1;
-        public string? Status { get; set; }
+
 
         public clsAttendance()
         {
@@ -31,7 +31,7 @@
             CheckIn = Attendance.CheckIn;
             CheckOut = Attendance.CheckOut;
             CreatedByUserID = Attendance.CreatedByUserID;
-            Status = Attendance.Status;
+
             Employee = new clsEmployee(Attendance.Employee);
         }
     }

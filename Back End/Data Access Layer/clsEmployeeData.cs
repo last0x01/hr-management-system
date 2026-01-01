@@ -6,6 +6,31 @@ namespace Data_Access_Layer
     public class clsEmployeeData
     {
 
+        public static int GetEmployeeCount()
+        {
+            int EmployeeCount = 0;
+            string query = @"SELECT COUNT(*) FROM Employees";
+
+            using (NpgsqlConnection Connection = new NpgsqlConnection(clsDataAccessSettings.ConnectionString))
+            using (NpgsqlCommand Command = new NpgsqlCommand(query, Connection))
+            {
+                try
+                {
+                    Connection.Open();
+                    object? result = Command.ExecuteScalar();
+
+                    if (result != null && int.TryParse(result.ToString(), out int count))
+                        EmployeeCount = count;
+                }
+                catch
+                {
+
+                }
+            }
+
+            return EmployeeCount;
+        }
+
         public static clsEmployee? GetEmployeeByID(int employeeID)
         {
             const string query = @"select * from Employees where EmployeeID = @EmployeeID";

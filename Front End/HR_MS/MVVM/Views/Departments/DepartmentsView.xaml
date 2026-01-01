@@ -9,9 +9,6 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
 
-    <UserControl.DataContext>
-        <vm:DepartmentsViewModel />
-    </UserControl.DataContext>
 
     <StackPanel>
         <TextBlock Text="Departments" Foreground="#537188" FontSize="30" FontWeight="Bold"
@@ -24,7 +21,7 @@
             </Grid.ColumnDefinitions>
 
             <Button Grid.Column="1" Command="{Binding AddDepartmentCommand}"
-            Style="{StaticResource pagingButton}">
+            Style="{StaticResource PrimaryButton}">
                 <StackPanel Orientation="Horizontal">
                     <icon:PackIconMaterial Kind="Plus"
                                    Style="{StaticResource menuButtonIcon}"
@@ -35,7 +32,7 @@
         </Grid>
 
         <DataGrid ItemsSource="{Binding Departments}" SelectedItem="{Binding SelectedDepartment}" Style="{DynamicResource DataGridStyle1}" CellStyle="{DynamicResource DataGridCellStyle1}" IsReadOnly="True"
-                          RowStyle="{DynamicResource DataGridRowStyle1}" Grid.Row="5" AutoGenerateColumns="False" MaxHeight="380">
+                          RowStyle="{DynamicResource DataGridRowStyle1}" Grid.Row="5" AutoGenerateColumns="False" MaxHeight="380" SelectionChanged="DataGrid_SelectionChanged">
             <!--Data-->
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding DepartmentID}" Header="Department ID"/>

@@ -1,8 +1,8 @@
 ﻿using Back_End.Models;
-using Business_Layer.Interfaces;
+using Business_Layer.Interfaces.Services;
 using Data_Access_Layer;
 
-namespace Business_Layer
+namespace Business_Layer.Services
 {
 
     public class UserService : IUserService

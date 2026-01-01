@@ -1,6 +1,7 @@
 ﻿using Back_End.Models;
-using Business_Layer;
 using Business_Layer.Interfaces;
+using Business_Layer.Interfaces.Services;
+using Business_Layer.Services;
 using HR_MS.MVVM.Commands;
 using HR_MS.MVVM.Models;
 using HR_MS.Services;
@@ -9,6 +10,7 @@ using HR_MS.Utilities.Enums;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 namespace HR_MS.MVVM.ViewModels.Employees
+
 {
     public class AddEditEmployeeViewModel : clsNotifyObject
     {
@@ -25,6 +27,18 @@ namespace HR_MS.MVVM.ViewModels.Employees
         private readonly IDialogService _DialogService;
         private enum enMode { Add = 1, Update = 2 }
         private enMode _Mode = enMode.Add;
+
+        private string _Title;
+
+        public string Title
+        {
+            get => _Title;
+            set
+            {
+                _Title = value;
+                OnPropertyChanged();
+            }
+        }
 
         public event Action? RequestClose;
         public ObservableCollection<clsDepartmentUiModel> Departments { get; } = new();
@@ -69,8 +83,9 @@ namespace HR_MS.MVVM.ViewModels.Employees
             _DepartmentService = new DepartmentService();
             SaveCommand = new RelayCommand(o => _Save());
             CloseCommand = new RelayCommand(o => _Close());
-            _Mode = enMode.Update;
 
+            _Mode = enMode.Update;
+            _Title = "Update Employee";
             _UpdateEmployeeGenderToUI();
             _LoadDepartments();
         }
@@ -84,6 +99,8 @@ namespace HR_MS.MVVM.ViewModels.Employees
             CloseCommand = new RelayCommand(o => _Close());
 
             _Mode = enMode.Add;
+            _Title = "Add Employee";
+
             SelectedGender = enGenderType.Male;
 
             _LoadDepartments();
@@ -106,10 +123,87 @@ namespace HR_MS.MVVM.ViewModels.Employees
             }
         }
 
+        private bool _IsValidSalary()
+        {
+            if (Employee == null)
+            {
+                _DialogService.ShowMessage("Employee information is missing.", enMessageType.Warning);
+                return false;
+            }
+
+            if (Employee.Salary == null)
+            {
+                _DialogService.ShowMessage("Salary is not provided.", enMessageType.Warning);
+                return false;
+            }
+            else if (Employee.Salary <= 0)
+            {
+                _DialogService.ShowMessage("Salary must be greater than 0.", enMessageType.Warning);
+                return false;
+            }
+
+            return true;
+        }
+
+
+        private bool _IsValidAge()
+        {
+            if (Employee?.Person == null)
+            {
+                _DialogService.ShowMessage("Employee information is missing.", enMessageType.Warning);
+                return false;
+            }
+
+            if (Employee.Person.Age == null)
+            {
+                _DialogService.ShowMessage("Age is not provided.", enMessageType.Warning);
+                return false;
+            }
+
+            if (Employee.Person.Age < 18)
+            {
+                _DialogService.ShowMessage("Age is below the minimum allowed (18 years).", enMessageType.Warning);
+                return false;
+            }
+            else if (Employee.Person.Age > 65)
+            {
+                _DialogService.ShowMessage("Age exceeds the maximum allowed (65 years).", enMessageType.Warning);
+                return false;
+            }
+
+            return true;
+        }
+
+        private bool _IsValidName(string Name, string Message)
+        {
+            if (string.IsNullOrWhiteSpace(Name))
+            {
+                _DialogService.ShowMessage(Message, enMessageType.Warning);
+                return false;
+            }
+
+            return true;
+        }
+
+        private bool _IsValidEmployeeNames()
+        {
+            if (!_IsValidName(Employee.Person.FirstName, "First name is required."))
+                return false;
+            if (!_IsValidName(Employee.Person.LastName, "Last name is required."))
+                return false;
+
+            return true;
+        }
 
 
         private void _Save()
         {
+            if (!_IsValidAge() || !_IsValidSalary() || !_IsValidEmployeeNames())
+            {
+                return;
+            }
+
+
 
 
             switch (_Mode)
@@ -129,6 +223,8 @@ namespace HR_MS.MVVM.ViewModels.Employees
             if (_EmployeeService.AddEmployee(Employee.ToEmployee()))
             {
                 _DialogService.ShowMessage("Employee added successfully", enMessageType.Success);
+                _Mode = enMode.Update;
+                _Title = "Update Employee";
             }
             else
                 _DialogService.ShowMessage("Failed to add", enMessageType.Error);
