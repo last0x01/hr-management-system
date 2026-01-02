@@ -12,6 +12,8 @@ namespace Business_Layer.Interfaces.Services
         bool DeleteEmployee(int EmployeeId);
         int GetEmployeeCount();
 
+        int AddAndGetEmployeeID(clsEmployee employee);
 
+        int GetPersonIDByEmployeeID(int EmployeeID);
     }
 }

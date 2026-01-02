@@ -13,6 +13,8 @@ namespace Business_Layer.Interfaces.Services
 
         clsUser? GetUserByUsernameAndPassword(string Username, string Passwrod);
 
+        int AddAndGetUserID(clsUser user);
+
 
     }
 }

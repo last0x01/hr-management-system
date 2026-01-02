@@ -45,5 +45,15 @@ namespace Business_Layer.Services
         }
 
 
+        public int AddAndGetEmployeeID(clsEmployee employee)
+        {
+            return clsEmployeeData.AddNewEmployee(employee);
+        }
+
+        public int GetPersonIDByEmployeeID(int EmployeeID)
+        {
+            return clsEmployeeData.GetPersonIDByEmployeeID(EmployeeID);
+        }
+
     }
 }

@@ -104,17 +104,43 @@ namespace HR_MS.MVVM.ViewModels.Users
         }
         public void _AddUser()
         {
-            if (_UserService.AddUser(User.ToUser()))
+            int UserID = _UserService.AddAndGetUserID(User.ToUser());
+
+            if (UserID != -1)
             {
+
                 _DialogService.ShowMessage("User Added successfully", enMessageType.Success);
                 _Mode = enMode.Update;
-                _Title = "Update User";
+                Title = "Update User";
+                User.UserID = UserID;
             }
             else
                 _DialogService.ShowMessage("Failed to Add", enMessageType.Error);
         }
 
 
+        private bool _IsValidUsername()
+        {
+            if (string.IsNullOrWhiteSpace(User.Username))
+            {
+                _DialogService.ShowMessage("Username is required.", enMessageType.Warning);
+                return false;
+            }
+
+
+            return true;
+        }
+        private bool _IsValidPassword()
+        {
+            if (string.IsNullOrWhiteSpace(User.Password))
+            {
+                _DialogService.ShowMessage("Password is required.", enMessageType.Warning);
+                return false;
+            }
+
+
+            return true;
+        }
 
 
 
@@ -168,7 +194,7 @@ namespace HR_MS.MVVM.ViewModels.Users
         }
         public void _Save()
         {
-            if (!_IsValidAge() || !_IsValidUserNames())
+            if (!_IsValidAge() || !_IsValidUserNames() || !_IsValidUsername() || !_IsValidPassword())
             {
                 return;
             }

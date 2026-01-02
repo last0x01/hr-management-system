@@ -11,5 +11,7 @@ namespace Business_Layer.Interfaces.Services
         bool UpdateDepartment(clsDepartment Department);
         bool DeleteDepartment(int DepartmentId);
 
+        int AddAndGetDepartmentID(clsDepartment department);
+
     }
 }
