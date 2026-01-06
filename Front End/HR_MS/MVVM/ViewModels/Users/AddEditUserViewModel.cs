@@ -148,24 +148,24 @@ namespace HR_MS.MVVM.ViewModels.Users
         {
             if (User?.Person == null)
             {
-                _DialogService.ShowMessage("User information is missing.", enMessageType.Error);
+                _DialogService.ShowMessage("User information is missing.", enMessageType.Warning);
                 return false;
             }
 
             if (User.Person.Age == null)
             {
-                _DialogService.ShowMessage("Age is not provided.", enMessageType.Error);
+                _DialogService.ShowMessage("Age is not provided.", enMessageType.Warning);
                 return false;
             }
 
             if (User.Person.Age < 18)
             {
-                _DialogService.ShowMessage("Age is below the minimum allowed (18 years).", enMessageType.Error);
+                _DialogService.ShowMessage("Age is below the minimum allowed (18 years).", enMessageType.Warning);
                 return false;
             }
             else if (User.Person.Age > 65)
             {
-                _DialogService.ShowMessage("Age exceeds the maximum allowed (65 years).", enMessageType.Error);
+                _DialogService.ShowMessage("Age exceeds the maximum allowed (65 years).", enMessageType.Warning);
                 return false;
             }
 
