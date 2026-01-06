@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:icon="http://metro.mahapps.com/winfx/xaml/iconpacks"
         xmlns:conv="clr-namespace:HR_MS.MVVM.Converters"
+           xmlns:local="clr-namespace:HR_MS.MVVM.Behaviors"
         mc:Ignorable="d"
         Title="Add / Edit User"
         Height="560"
@@ -62,11 +63,11 @@
                              Text="{Binding User.Person.LastName, Mode=TwoWay}"/>
 
                     <TextBlock Text="Age" Style="{StaticResource FieldLabel}"/>
-                    <TextBox Style="{StaticResource RoundedTextBox}"
+                    <TextBox  local:InputBehavior.InputType="Age" Style="{StaticResource RoundedTextBox}"
                              Text="{Binding User.Person.Age, Mode=TwoWay}"/>
 
                     <TextBlock Text="Phone" Style="{StaticResource FieldLabel}"/>
-                    <TextBox Style="{StaticResource RoundedTextBox}"
+                    <TextBox  local:InputBehavior.InputType="Phone" Style="{StaticResource RoundedTextBox}"
                              Text="{Binding User.Person.Phone, Mode=TwoWay}"/>
 
                     <TextBlock Text="Email" Style="{StaticResource FieldLabel}"/>
