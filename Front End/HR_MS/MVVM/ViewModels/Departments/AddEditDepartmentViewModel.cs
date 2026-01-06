@@ -109,6 +109,8 @@ namespace HR_MS.MVVM.ViewModels.Departments
 
         private void _UpdateDepartment()
         {
+
+
             if (_DepartmentService.UpdateDepartment(Department.ToDepartment()))
             {
                 _DialogService.ShowMessage("Department Updated successfully", enMessageType.Success);
@@ -118,12 +120,14 @@ namespace HR_MS.MVVM.ViewModels.Departments
         }
         private void _AddDepartment()
         {
-            if (_DepartmentService.AddDepartment(Department.ToDepartment()))
+            int DepartmentID = _DepartmentService.AddAndGetDepartmentID(Department.ToDepartment());
+            if (DepartmentID != -1)
             {
                 _DialogService.ShowMessage("Department added successfully", enMessageType.Success);
                 _Mode = enMode.Update;
 
-                _Title = "Update Department";
+                Title = "Update Department";
+                Department.DepartmentID = DepartmentID;
             }
             else
                 _DialogService.ShowMessage("Failed to add", enMessageType.Error);

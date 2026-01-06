@@ -104,17 +104,43 @@ namespace HR_MS.MVVM.ViewModels.Users
         }
         public void _AddUser()
         {
-            if (_UserService.AddUser(User.ToUser()))
+            int UserID = _UserService.AddAndGetUserID(User.ToUser());
+
+            if (UserID != -1)
             {
+
                 _DialogService.ShowMessage("User Added successfully", enMessageType.Success);
                 _Mode = enMode.Update;
-                _Title = "Update User";
+                Title = "Update User";
+                User.UserID = UserID;
             }
             else
                 _DialogService.ShowMessage("Failed to Add", enMessageType.Error);
         }
 
 
+        private bool _IsValidUsername()
+        {
+            if (string.IsNullOrWhiteSpace(User.Username))
+            {
+                _DialogService.ShowMessage("Username is required.", enMessageType.Warning);
+                return false;
+            }
+
+
+            return true;
+        }
+        private bool _IsValidPassword()
+        {
+            if (string.IsNullOrWhiteSpace(User.Password))
+            {
+                _DialogService.ShowMessage("Password is required.", enMessageType.Warning);
+                return false;
+            }
+
+
+            return true;
+        }
 
 
 
@@ -122,24 +148,24 @@ namespace HR_MS.MVVM.ViewModels.Users
         {
             if (User?.Person == null)
             {
-                _DialogService.ShowMessage("User information is missing.", enMessageType.Error);
+                _DialogService.ShowMessage("User information is missing.", enMessageType.Warning);
                 return false;
             }
 
             if (User.Person.Age == null)
             {
-                _DialogService.ShowMessage("Age is not provided.", enMessageType.Error);
+                _DialogService.ShowMessage("Age is not provided.", enMessageType.Warning);
                 return false;
             }
 
             if (User.Person.Age < 18)
             {
-                _DialogService.ShowMessage("Age is below the minimum allowed (18 years).", enMessageType.Error);
+                _DialogService.ShowMessage("Age is below the minimum allowed (18 years).", enMessageType.Warning);
                 return false;
             }
             else if (User.Person.Age > 65)
             {
-                _DialogService.ShowMessage("Age exceeds the maximum allowed (65 years).", enMessageType.Error);
+                _DialogService.ShowMessage("Age exceeds the maximum allowed (65 years).", enMessageType.Warning);
                 return false;
             }
 
@@ -168,7 +194,7 @@ namespace HR_MS.MVVM.ViewModels.Users
         }
         public void _Save()
         {
-            if (!_IsValidAge() || !_IsValidUserNames())
+            if (!_IsValidAge() || !_IsValidUserNames() || !_IsValidUsername() || !_IsValidPassword())
             {
                 return;
             }

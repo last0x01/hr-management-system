@@ -154,7 +154,7 @@ namespace HR_MS.MVVM.ViewModels.Employees
                 return false;
             }
 
-            if (Employee.Person.Age == null)
+            if (string.IsNullOrWhiteSpace(Employee.Person.Age.ToString()))
             {
                 _DialogService.ShowMessage("Age is not provided.", enMessageType.Warning);
                 return false;
@@ -184,6 +184,17 @@ namespace HR_MS.MVVM.ViewModels.Employees
 
             return true;
         }
+        private bool _IsValidJobPosition()
+        {
+            if (string.IsNullOrWhiteSpace(Employee.JobPosition))
+            {
+                _DialogService.ShowMessage("Job Position is required.", enMessageType.Warning);
+                return false;
+            }
+
+
+            return true;
+        }
 
         private bool _IsValidEmployeeNames()
         {
@@ -198,7 +209,7 @@ namespace HR_MS.MVVM.ViewModels.Employees
 
         private void _Save()
         {
-            if (!_IsValidAge() || !_IsValidSalary() || !_IsValidEmployeeNames())
+            if (!_IsValidAge() || !_IsValidSalary() || !_IsValidEmployeeNames() || !_IsValidJobPosition())
             {
                 return;
             }
@@ -220,11 +231,15 @@ namespace HR_MS.MVVM.ViewModels.Employees
 
         private void AddEmployee()
         {
-            if (_EmployeeService.AddEmployee(Employee.ToEmployee()))
+            int EmployeeID = _EmployeeService.AddAndGetEmployeeID(Employee.ToEmployee());
+
+            if (EmployeeID != -1)
             {
                 _DialogService.ShowMessage("Employee added successfully", enMessageType.Success);
                 _Mode = enMode.Update;
-                _Title = "Update Employee";
+                Title = "Update Employee";
+                Employee.EmployeeID = EmployeeID;
+                Employee.PersonID = _EmployeeService.GetPersonIDByEmployeeID(EmployeeID);
             }
             else
                 _DialogService.ShowMessage("Failed to add", enMessageType.Error);

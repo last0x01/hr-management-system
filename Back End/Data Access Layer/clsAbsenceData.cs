@@ -149,11 +149,12 @@ namespace Back_End.Data_Access_Layer
 
             using (NpgsqlConnection connection = new NpgsqlConnection(clsDataAccessSettings.ConnectionString))
             using (NpgsqlCommand command = new NpgsqlCommand(
-                @"UPDATE absences
+                @"        UPDATE absences
                   SET absence_date = @Date,
                       absencetypeid = @AbsenceTypeID,
                       reason = @Reason
-                  WHERE absenceid = @AbsenceID", connection))
+                  WHERE absenceid = @AbsenceID
+                  ", connection))
             {
                 command.Parameters.AddWithValue("@AbsenceID", absence.AbsenceID);
                 command.Parameters.AddWithValue("@Date", absence.AbsenceDate);

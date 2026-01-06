@@ -66,7 +66,7 @@ namespace HR_MS.MVVM.ViewModels.Logins
 
             if (string.IsNullOrWhiteSpace(Username) || string.IsNullOrWhiteSpace(Password))
             {
-                _DialogService.ShowMessage("Please enter username and password.", Utilities.Enums.enMessageType.Warning);
+                _DialogService.ShowMessage("Please enter username/password.", Utilities.Enums.enMessageType.Warning);
                 return;
             }
 

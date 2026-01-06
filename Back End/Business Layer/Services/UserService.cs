@@ -44,6 +44,9 @@ namespace Business_Layer.Services
         }
 
 
-
+        public int AddAndGetUserID(clsUser user)
+        {
+            return clsUserData.AddNewUser(user);
+        }
     }
 }

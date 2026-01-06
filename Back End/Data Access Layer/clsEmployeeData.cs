@@ -30,6 +30,33 @@ namespace Data_Access_Layer
 
             return EmployeeCount;
         }
+        public static int GetPersonIDByEmployeeID(int EmployeeID)
+        {
+            int PersonID = -1;
+
+            string query = @"SELECT PersonID FROM Employees where EmployeeID = @EmployeeID";
+
+            using (NpgsqlConnection Connection = new NpgsqlConnection(clsDataAccessSettings.ConnectionString))
+            using (NpgsqlCommand Command = new NpgsqlCommand(query, Connection))
+            {
+                Command.Parameters.AddWithValue("@EmployeeID", EmployeeID);
+
+                try
+                {
+                    Connection.Open();
+                    object? result = Command.ExecuteScalar();
+
+                    if (result != null && int.TryParse(result.ToString(), out int InsertedPersonID))
+                        PersonID = InsertedPersonID;
+                }
+                catch
+                {
+
+                }
+            }
+
+            return PersonID;
+        }
 
         public static clsEmployee? GetEmployeeByID(int employeeID)
         {
@@ -136,9 +163,29 @@ namespace Data_Access_Layer
         {
             bool IsUpdated = false;
 
+            string query = @"UPDATE people
+                                SET
+                                    firstname = @FirstName,
+                                    lastname  = @LastName,
+                                    age       = @Age,
+                                    gender    = @Gender,
+                                    phone     = @Phone,
+                                    email     = @Email,
+                                    address   = @Address
+                                WHERE personid = @PersonID;
+
+                                UPDATE employees
+                                SET
+                                    departmentid = @DepartmentID,
+                                    salary       = @Salary,
+                                    job_position  = @job_position
+                                WHERE employeeid = @EmployeeID;
+
+                                ";
+
             using (NpgsqlConnection Connection = new NpgsqlConnection(clsDataAccessSettings.ConnectionString))
             {
-                NpgsqlCommand Command = new NpgsqlCommand("call update_employee(@PersonID, @FirstName, @LastName, @Age,@Phone ,@Email, @Address,@DepartmentID, @Salary,@job_position)", Connection);
+                NpgsqlCommand Command = new NpgsqlCommand(query, Connection);
 
 
 
@@ -152,6 +199,7 @@ namespace Data_Access_Layer
                 Command.Parameters.AddWithValue("@Email", Employee.Person.Email ?? (object)DBNull.Value);
 
                 Command.Parameters.AddWithValue("@PersonID", Employee.PersonID);
+                Command.Parameters.AddWithValue("@EmployeeID", Employee.EmployeeID);
                 Command.Parameters.AddWithValue("@Salary", Employee.Salary!);
                 Command.Parameters.AddWithValue("@DepartmentID", Employee.DepartmentID ?? (object)DBNull.Value);
                 Command.Parameters.AddWithValue("@job_position", Employee.JobPosition);
@@ -162,14 +210,9 @@ namespace Data_Access_Layer
                 {
                     Connection.Open();
 
-                    object? result = Command.ExecuteScalar();
+                    int rows = Command.ExecuteNonQuery();
 
-                    // Safely read the OUT parameter:
-                    // - Checks that the value is a non-null boolean.
-                    // - If so, assigns it to 'updated' and returns its value.
-                    // - If null or not a bool → result is false.
-
-                    IsUpdated = result is bool updated && updated;
+                    IsUpdated = rows > 0;
 
 
                 }

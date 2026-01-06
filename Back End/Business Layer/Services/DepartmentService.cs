@@ -35,5 +35,9 @@ namespace Business_Layer.Services
             return clsDepartmentData.DeleteDepartment(DepartmentID);
         }
 
+        public int AddAndGetDepartmentID(clsDepartment department)
+        {
+            return clsDepartmentData.AddNewDepartment(department);
+        }
     }
 }
