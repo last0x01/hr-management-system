@@ -103,8 +103,8 @@
 
                         </StackPanel>
 
-                        <RadioButton Command="{Binding LogoutCommand}"
-                            Style="{StaticResource MainMenuButton}" VerticalAlignment="Bottom" 
+                        <RadioButton Style="{StaticResource Logout}" Command="{Binding LogoutCommand}"
+                           VerticalAlignment="Bottom" 
                                     DockPanel.Dock="Bottom" Margin="15 0 15 20">
                             <StackPanel Orientation="Horizontal">
                                 <icon:PackIconMaterial Kind="Logout" Style="{StaticResource menuButtonIcon}"/>

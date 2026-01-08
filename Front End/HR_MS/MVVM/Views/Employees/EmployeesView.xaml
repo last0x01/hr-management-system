@@ -36,32 +36,34 @@
                         RowStyle="{DynamicResource DataGridRowStyle1}" Grid.Row="5" AutoGenerateColumns="False" MaxHeight="380">
             <!--Data-->
             <DataGrid.Columns>
-                 <DataGridTextColumn Header="Employee ID"
+                <DataGridTextColumn Header="Employee ID"
                             Binding="{Binding EmployeeID}" />
 
-        <DataGridTextColumn Header="Full Name"
+                <DataGridTextColumn Header="Full Name"
                             Binding="{Binding Person.FullName}" Width="140"/>
 
-        <DataGridTextColumn Header="Age"
+                <DataGridTextColumn Header="Age"
                             Binding="{Binding Person.Age}" />
 
-        <DataGridTextColumn Header="Email"
+                <DataGridTextColumn Header="Email"
                             Binding="{Binding Person.Email}" />
 
-        <DataGridTextColumn Header="Phone"
+                <DataGridTextColumn Header="Phone"
                             Binding="{Binding Person.Phone}" />
 
-        <DataGridTextColumn Header="Salary"
+                <DataGridTextColumn Header="Salary"
                             Binding="{Binding Salary}" />
 
-        <DataGridTextColumn Header="Position"
+                <DataGridTextColumn Header="Position"
                             Binding="{Binding JobPosition}" />
 
-        <DataGridTextColumn Header="Department"
+                <DataGridTextColumn Header="Department"
                             Binding="{Binding DepartmentName}" />
 
+            
 
-                <DataGridTemplateColumn Width="100">
+
+            <DataGridTemplateColumn Width="100">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">
@@ -76,6 +78,19 @@
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
+
+
+            <!--<DataGrid.ContextMenu>
+                <ContextMenu Style="{StaticResource ModernContextMenuStyle}">
+                    <MenuItem Style="{StaticResource ModernMenuItemStyle}" Header="Details" 
+                              Command="{Binding DetailsCommand, RelativeSource= {RelativeSource AncestorType=DataGrid}}" >
+                        <MenuItem.Icon>
+                            <icon:PackIconMaterial Kind="Account" Height="18" Width="18" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+
+                </ContextMenu>
+            </DataGrid.ContextMenu>-->
         </DataGrid>
 
     </StackPanel>

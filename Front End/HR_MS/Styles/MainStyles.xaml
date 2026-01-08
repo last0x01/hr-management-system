@@ -9,6 +9,7 @@
         <ResourceDictionary Source="/Styles/Sidebar.xaml"/>
         <ResourceDictionary Source="/Styles/GeneralControls.xaml"/>
         <ResourceDictionary Source="/Styles/ComboBoxes.xaml"/>
+        <ResourceDictionary Source="/Styles/ContextMenu.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 
 
