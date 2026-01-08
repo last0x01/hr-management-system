@@ -32,7 +32,7 @@
         </Grid>
 
         <DataGrid ItemsSource="{Binding Departments}" SelectedItem="{Binding SelectedDepartment}" Style="{DynamicResource DataGridStyle1}" CellStyle="{DynamicResource DataGridCellStyle1}" IsReadOnly="True"
-                          RowStyle="{DynamicResource DataGridRowStyle1}" Grid.Row="5" AutoGenerateColumns="False" MaxHeight="380" SelectionChanged="DataGrid_SelectionChanged">
+                          RowStyle="{DynamicResource DataGridRowStyle1}" Grid.Row="5" AutoGenerateColumns="False" MaxHeight="380">
             <!--Data-->
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding DepartmentID}" Header="Department ID"/>
